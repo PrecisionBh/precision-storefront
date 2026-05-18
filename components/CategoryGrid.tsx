@@ -1,8 +1,23 @@
 import Link from "next/link"
 
-export default function CategoryGrid() {
+type Props = {
+  cueImage?: string
+  caseImage?: string
+  jerseyImage?: string
+  gloveImage?: string
+  shirtImage?: string
+}
+
+export default function CategoryGrid({
+  cueImage,
+  caseImage,
+  jerseyImage,
+  gloveImage,
+  shirtImage,
+}: Props) {
+
   return (
-    <section className="bg-black text-white px-4 md:px-10 py-16 md:py-24">
+    <section className="bg-black text-white px-4 md:px-10 py-12 md:py-16">
 
       <div className="text-center mb-10 md:mb-16">
         <h2 className="text-[42px] md:text-[110px] font-black uppercase tracking-[2px] md:tracking-[4px] leading-none">
@@ -16,14 +31,16 @@ export default function CategoryGrid() {
         {/* CUES */}
         <Link
           href="/cues"
-          className="relative h-[320px] md:h-[420px] overflow-hidden group cursor-pointer bg-[#0F172A] block rounded-2xl"
+          className="relative  overflow-hidden group cursor-pointer bg-[#0F172A] block rounded-2xl"
         >
 
-          <img
-            src="https://images.unsplash.com/photo-1611251135345-18c56206b863?q=80&w=2070&auto=format&fit=crop"
-            alt="Cues"
-            className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-700"
-          />
+          {cueImage && (
+            <img
+              src={cueImage}
+              alt="Cues"
+              className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-700"
+            />
+          )}
 
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
@@ -34,7 +51,7 @@ export default function CategoryGrid() {
               Precision Collection
             </p>
 
-            <h3 className="text-[42px] md:text-[70px] leading-none font-black uppercase break-words">
+            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
               Cues
             </h3>
 
@@ -49,14 +66,16 @@ export default function CategoryGrid() {
         {/* CASES */}
         <Link
           href="/cases"
-          className="relative h-[320px] md:h-[420px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
+          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
         >
 
-          <img
-            src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?q=80&w=1974&auto=format&fit=crop"
-            alt="Cases"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-          />
+          {caseImage && (
+            <img
+              src={caseImage}
+              alt="Cases"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
+            />
+          )}
 
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
@@ -67,7 +86,7 @@ export default function CategoryGrid() {
               Protection Series
             </p>
 
-            <h3 className="text-[42px] md:text-[70px] leading-none font-black uppercase break-words">
+            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
               Cases
             </h3>
 
@@ -82,14 +101,16 @@ export default function CategoryGrid() {
         {/* JERSEYS */}
         <Link
           href="/jerseys"
-          className="relative h-[320px] md:h-[420px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
+          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
         >
 
-          <img
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1974&auto=format&fit=crop"
-            alt="Jerseys"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-          />
+          {jerseyImage && (
+            <img
+              src={jerseyImage}
+              alt="Jerseys"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
+            />
+          )}
 
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
@@ -100,7 +121,7 @@ export default function CategoryGrid() {
               Apex Series
             </p>
 
-            <h3 className="text-[42px] md:text-[70px] leading-none font-black uppercase break-words">
+            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
               Jerseys
             </h3>
 
@@ -112,17 +133,19 @@ export default function CategoryGrid() {
 
         </Link>
 
-        {/* CHALK */}
+        {/* GLOVES */}
         <Link
           href="/chalk-gloves"
-          className="relative h-[320px] md:h-[420px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
+          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
         >
 
-          <img
-            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1971&auto=format&fit=crop"
-            alt="Chalk"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-          />
+          {gloveImage && (
+            <img
+              src={gloveImage}
+              alt="Gloves"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
+            />
+          )}
 
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
@@ -152,14 +175,16 @@ export default function CategoryGrid() {
 
         <Link
           href="/apparel"
-          className="relative h-[320px] md:h-[420px] w-full md:w-[60%] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
+          className="relative h-[260px] md:h-[340px] w-full md:w-[60%] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
         >
 
-          <img
-            src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=2070&auto=format&fit=crop"
-            alt="Apparel"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-          />
+          {shirtImage && (
+            <img
+              src={shirtImage}
+              alt="Apparel"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
+            />
+          )}
 
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
@@ -170,7 +195,7 @@ export default function CategoryGrid() {
               Lifestyle Collection
             </p>
 
-            <h3 className="text-[42px] md:text-[70px] leading-none font-black uppercase break-words">
+            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
               Apparel
             </h3>
 

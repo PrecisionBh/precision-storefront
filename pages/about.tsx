@@ -12,8 +12,7 @@ export default function AboutPage() {
         <AnnouncementBar />
         <Navbar />
       </div>
-
-      <div className="h-[104px] md:h-[124px]" />
+      
       
 
       {/* HERO */}
@@ -121,7 +120,7 @@ export default function AboutPage() {
       </section>
 
       {/* STATS */}
-      <section className="bg-[#0A0A0A] py-16 md:py-24 border-y border-white/10">
+      <section className="bg-[#0A0A0A] py-12 md:py-16 border-y border-white/10">
 
         <LayoutContainer>
 

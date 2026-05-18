@@ -41,7 +41,7 @@ export default function ShippingPolicyPage() {
       </section>
 
       {/* CONTENT */}
-      <section className="bg-white text-black py-16 md:py-24">
+      <section className="bg-white text-black py-12 md:py-16">
 
         <LayoutContainer>
 

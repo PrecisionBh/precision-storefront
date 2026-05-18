@@ -54,6 +54,7 @@ export default function CuesPage({
   jumpCues,
   playingCues,
 }: any) {
+
   return (
     <main className="bg-[#111111] text-white">
 
@@ -62,9 +63,14 @@ export default function CuesPage({
         <AnnouncementBar />
         <Navbar />
       </div>
+
       <div className="h-[104px] md:h-[124px]" />
 
-      <CueHero />
+      <CueHero
+        image={
+          breakCues?.[0]?.node?.featuredImage?.url
+        }
+      />
 
       <div
         id="top"

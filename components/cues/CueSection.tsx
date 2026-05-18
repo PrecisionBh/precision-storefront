@@ -18,7 +18,7 @@ export default function CueSection({
   return (
     <section
       id={id}
-      className="bg-white py-16 md:py-24 scroll-mt-[120px] md:scroll-mt-[140px]"
+      className="bg-white py-12 md:py-16 scroll-mt-[120px] md:scroll-mt-[140px]"
     >
 
       <LayoutContainer>
@@ -44,6 +44,9 @@ export default function CueSection({
             const variantId =
               node?.variants?.edges?.[0]?.node?.id
 
+            const availableForSale =
+              node?.variants?.edges?.[0]?.node?.availableForSale
+
             return (
               <ProductCard
                 key={node.id}
@@ -61,6 +64,8 @@ export default function CueSection({
                 handle={node.handle}
 
                 variantId={variantId}
+
+                availableForSale={availableForSale}
               />
             )
           })}

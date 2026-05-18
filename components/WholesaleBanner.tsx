@@ -1,6 +1,6 @@
 export default function WholesaleBanner() {
   return (
-    <section className="bg-black px-4 md:px-10 py-16 md:py-24">
+    <section className="bg-black px-4 md:px-10 py-12 md:py-16">
 
       <div className="relative overflow-hidden border-l-4 border-r-4 border-[#D97732] bg-[#111111] px-5 md:px-24 py-12 md:py-20 rounded-2xl">
 
@@ -22,7 +22,7 @@ export default function WholesaleBanner() {
 
             <p className="text-gray-400 text-sm md:text-xl leading-relaxed mt-5 md:mt-10 max-w-[650px]">
               Join the Precision Cues wholesale network and unlock tiered pricing —
-              up to 30% off retail. Bronze, Silver, Gold, and Platinum tiers available.
+              up to 45% off retail. Bronze, Silver, Gold, and Platinum tiers available.
             </p>
 
           </div>

@@ -1,16 +1,25 @@
 import LayoutContainer from "@/components/LayoutContainer"
 
-export default function CueHero() {
+type Props = {
+  image?: string
+}
+
+export default function CueHero({
+  image,
+}: Props) {
+
   return (
     <section className="relative h-[420px] md:h-[520px] overflow-hidden bg-black">
 
-      <img
-        src="https://images.unsplash.com/photo-1611251135345-18c56206b863?q=80&w=2070&auto=format&fit=crop"
-        alt="Cues Hero"
-        className="absolute inset-0 w-full h-full object-cover opacity-50"
-      />
+      {image && (
+        <img
+          src={image}
+          alt="Cues Hero"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+      )}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
 
       <LayoutContainer className="relative z-10 h-full">
 

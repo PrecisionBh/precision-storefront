@@ -98,7 +98,7 @@ export default function WholesalePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#0A0A0A] py-16 md:py-24 border-y border-white/10">
+      <section className="bg-[#0A0A0A] py-12 md:py-16 border-y border-white/10">
 
         <LayoutContainer>
 
