@@ -1,0 +1,205 @@
+"use client"
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
+
+import {
+  addToCart,
+  createCart,
+  getCart,
+  removeFromCart,
+  updateCartItem,
+} from "@/lib/shopify"
+
+type CartContextType = {
+  cart: any
+
+  addItem: (
+    merchandiseId: string
+  ) => Promise<void>
+
+  removeItem: (
+    lineId: string
+  ) => Promise<void>
+
+  updateQuantity: (
+    lineId: string,
+    quantity: number
+  ) => Promise<void>
+
+  checkout: () => void
+}
+
+const CartContext =
+  createContext<CartContextType | null>(
+    null
+  )
+
+export function CartProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [cart, setCart] =
+    useState<any>(null)
+
+  /* ------------------------------------------ */
+  /* -------- INITIALIZE CART ----------------- */
+  /* ------------------------------------------ */
+
+  useEffect(() => {
+    initializeCart()
+  }, [])
+
+  async function initializeCart() {
+    try {
+      const existingCartId =
+        localStorage.getItem("cartId")
+
+      if (existingCartId) {
+        const existingCart =
+          await getCart(existingCartId)
+
+        if (existingCart) {
+          setCart(existingCart)
+          return
+        }
+      }
+
+      const newCart =
+        await createCart()
+
+      localStorage.setItem(
+        "cartId",
+        newCart.id
+      )
+
+      setCart(newCart)
+    } catch (err) {
+      console.error(
+        "Cart init error:",
+        err
+      )
+    }
+  }
+
+  /* ------------------------------------------ */
+  /* ------------ ADD ITEM -------------------- */
+  /* ------------------------------------------ */
+
+  async function addItem(
+    merchandiseId: string
+  ) {
+    if (!cart?.id) return
+
+    try {
+      const updatedCart =
+        await addToCart(
+          cart.id,
+          merchandiseId,
+          1
+        )
+
+      setCart(updatedCart)
+    } catch (err) {
+      console.error(
+        "Add to cart error:",
+        err
+      )
+    }
+  }
+
+  /* ------------------------------------------ */
+  /* ----------- REMOVE ITEM ------------------ */
+  /* ------------------------------------------ */
+
+  async function removeItem(
+    lineId: string
+  ) {
+    if (!cart?.id) return
+
+    try {
+      const updatedCart =
+        await removeFromCart(
+          cart.id,
+          lineId
+        )
+
+      setCart(updatedCart)
+    } catch (err) {
+      console.error(
+        "Remove item error:",
+        err
+      )
+    }
+  }
+
+  /* ------------------------------------------ */
+  /* -------- UPDATE QUANTITY ----------------- */
+  /* ------------------------------------------ */
+
+  async function updateQuantity(
+    lineId: string,
+    quantity: number
+  ) {
+    if (!cart?.id) return
+
+    try {
+      const updatedCart =
+        await updateCartItem(
+          cart.id,
+          lineId,
+          quantity
+        )
+
+      setCart(updatedCart)
+    } catch (err) {
+      console.error(
+        "Quantity update error:",
+        err
+      )
+    }
+  }
+
+  /* ------------------------------------------ */
+  /* -------------- CHECKOUT ------------------ */
+  /* ------------------------------------------ */
+
+  function checkout() {
+    if (!cart?.checkoutUrl) return
+
+    window.location.href =
+      cart.checkoutUrl
+  }
+
+  return (
+    <CartContext.Provider
+      value={{
+        cart,
+        addItem,
+        removeItem,
+        updateQuantity,
+        checkout,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  )
+}
+
+export function useCart() {
+  const context =
+    useContext(CartContext)
+
+  if (!context) {
+    throw new Error(
+      "useCart must be used inside CartProvider"
+    )
+  }
+
+  return context
+}
