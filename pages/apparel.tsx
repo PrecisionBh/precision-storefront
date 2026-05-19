@@ -2,7 +2,7 @@ import AnnouncementBar from "@/components/AnnouncementBar"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 
-import CueSection from "@/components/cues/CueSection"
+import ProductCard from "@/components/ProductCard"
 
 import LayoutContainer from "@/components/LayoutContainer"
 
@@ -11,7 +11,7 @@ import { getCollectionProductsQuery } from "@/lib/queries"
 
 export async function getServerSideProps() {
 
-  const shirtsResponse = await shopifyFetch({
+  const apparelResponse = await shopifyFetch({
     query: getCollectionProductsQuery,
 
     variables: {
@@ -19,52 +19,25 @@ export async function getServerSideProps() {
     },
   })
 
-  const hoodiesResponse = await shopifyFetch({
-    query: getCollectionProductsQuery,
-
-    variables: {
-      handle: "apparel",
-    },
-  })
-
-  const hatsResponse = await shopifyFetch({
-    query: getCollectionProductsQuery,
-
-    variables: {
-      handle: "apparel",
-    },
-  })
-
-  const shirts =
-    shirtsResponse.data.collection?.products?.edges || []
-
-  const hoodies =
-    hoodiesResponse.data.collection?.products?.edges || []
-
-  const hats =
-    hatsResponse.data.collection?.products?.edges || []
+  const products =
+    apparelResponse.data.collection?.products?.edges || []
 
   return {
     props: {
-      shirts,
-      hoodies,
-      hats,
+      products,
 
       heroImage:
-        shirts?.[0]?.node?.featuredImage?.url ||
-        hoodies?.[0]?.node?.featuredImage?.url ||
-        hats?.[0]?.node?.featuredImage?.url ||
+        products?.[0]?.node?.featuredImage?.url ||
         null,
     },
   }
 }
 
 export default function ApparelPage({
-  shirts,
-  hoodies,
-  hats,
+  products,
   heroImage,
 }: any) {
+
   return (
     <main className="bg-[#111111] text-white">
 
@@ -96,7 +69,7 @@ export default function ApparelPage({
             <div className="max-w-[760px]">
 
               <p className="text-[#D97732] uppercase tracking-[4px] md:tracking-[7px] text-[9px] md:text-xs font-bold mb-3 md:mb-4">
-                Lifestyle Collection
+                Precision Lifestyle Collection
               </p>
 
               <h1 className="text-[40px] md:text-[82px] leading-[0.88] font-black uppercase text-white">
@@ -104,7 +77,7 @@ export default function ApparelPage({
               </h1>
 
               <p className="text-gray-300 text-[13px] md:text-[18px] leading-relaxed mt-3 md:mt-5 max-w-[620px]">
-                Everyday apparel built for players who live the game on and off the table.
+                Premium performance and lifestyle apparel built for players who live the game both on and off the table.
               </p>
 
             </div>
@@ -115,73 +88,87 @@ export default function ApparelPage({
 
       </section>
 
-      <div
-        id="top"
-        className="scroll-mt-[120px] md:scroll-mt-[160px]"
-      />
-
-      {/* TABS */}
-      <div className="bg-[#111111] border-b border-black/10 sticky top-[86px] md:top-[108px] z-40">
+      {/* POD NOTICE */}
+      <section className="bg-[#D97732]">
 
         <LayoutContainer>
 
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <div className="py-5 md:py-6 text-center">
 
-            <a
-              href="#top"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-[#D97732] font-bold text-[10px] md:text-xs border-b-2 border-[#D97732] py-4 md:py-5 flex-shrink-0"
-            >
-              All
-            </a>
-
-            <a
-              href="#shirts"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Shirts
-            </a>
-
-            <a
-              href="#hoodies"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Hoodies
-            </a>
-
-            <a
-              href="#hats"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Hats
-            </a>
+            <p className="text-white uppercase tracking-[2px] md:tracking-[4px] text-[10px] md:text-[12px] font-black leading-[1.8]">
+              All Clothing Is Made To Order • Printed On Demand • Delivery Typically Takes 7–10 Business Days
+            </p>
 
           </div>
 
         </LayoutContainer>
 
-      </div>
+      </section>
 
-      {/* SECTIONS */}
-      <CueSection
-        id="shirts"
-        eyebrow="Everyday Player Gear"
-        title="Shirts"
-        products={shirts}
-      />
+      {/* PRODUCTS */}
+      <section className="bg-white py-12 md:py-20">
 
-      <CueSection
-        id="hoodies"
-        eyebrow="Comfort Meets The Game"
-        title="Hoodies"
-        products={hoodies}
-      />
+        <LayoutContainer>
 
-      <CueSection
-        id="hats"
-        eyebrow="Precision Lifestyle"
-        title="Hats"
-        products={hats}
-      />
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-10">
+
+            {[...products]
+              .sort((a: any, b: any) => {
+
+                const aAvailable =
+                  a?.node?.variants?.edges?.[0]?.node
+                    ?.availableForSale
+
+                const bAvailable =
+                  b?.node?.variants?.edges?.[0]?.node
+                    ?.availableForSale
+
+                if (aAvailable === bAvailable)
+                  return 0
+
+                return aAvailable ? -1 : 1
+              })
+              .map(({ node }: any) => {
+
+                const variantId =
+                  node?.variants?.edges?.[0]?.node?.id
+
+                const availableForSale =
+                  node?.variants?.edges?.[0]?.node?.availableForSale
+
+                const variantCount =
+                  node?.variants?.edges?.length || 0
+
+                return (
+                  <ProductCard
+                    key={node.id}
+
+                    image={node.featuredImage?.url}
+
+                    title={node.title}
+
+                    price={`$${Math.round(
+                      node.priceRange.minVariantPrice.amount
+                    )}`}
+
+                    subtitle="Precision Apparel"
+
+                    handle={node.handle}
+
+                    variantId={variantId}
+
+                    availableForSale={availableForSale}
+
+                    variantCount={variantCount}
+                  />
+                )
+              })}
+
+          </div>
+
+        </LayoutContainer>
+
+      </section>
 
       <Footer />
 

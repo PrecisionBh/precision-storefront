@@ -39,8 +39,23 @@ export default function CueSection({
         {/* PRODUCTS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-10">
 
-          {products.map(({ node }: any) => {
+          {[...products]
+  .sort((a: any, b: any) => {
 
+    const aAvailable =
+      a?.node?.variants?.edges?.[0]?.node
+        ?.availableForSale
+
+    const bAvailable =
+      b?.node?.variants?.edges?.[0]?.node
+        ?.availableForSale
+
+    if (aAvailable === bAvailable)
+      return 0
+
+    return aAvailable ? -1 : 1
+  })
+  .map(({ node }: any) => {
             const variantId =
               node?.variants?.edges?.[0]?.node?.id
 
@@ -66,6 +81,10 @@ export default function CueSection({
                 variantId={variantId}
 
                 availableForSale={availableForSale}
+
+                variants={
+                  node?.variants?.edges || []
+                }
               />
             )
           })}

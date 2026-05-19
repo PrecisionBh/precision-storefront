@@ -119,7 +119,7 @@ export default function Navbar() {
             </nav>
 
             {/* RIGHT */}
-            <div className="flex items-center gap-5 md:gap-7">
+            <div className="flex items-center gap-4 md:gap-6">
 
               {/* DESKTOP TOTAL */}
               {cartCount > 0 && (
@@ -135,6 +135,14 @@ export default function Navbar() {
 
                 </div>
               )}
+
+              {/* WHOLESALE LOGIN */}
+              <Link
+                href="/wholesale/login"
+                className="hidden md:inline-flex items-center justify-center border border-[#D97732] text-[#D97732] hover:bg-[#D97732] hover:text-white transition px-5 h-[42px] rounded-xl uppercase tracking-[2px] text-[11px] font-black"
+              >
+                Wholesale Login
+              </Link>
 
               {/* CART */}
               <Link
@@ -298,6 +306,14 @@ export default function Navbar() {
               className="hover:text-[#D97732] transition"
             >
               Apparel
+            </Link>
+
+            <Link
+              href="/wholesale/login"
+              onClick={() => setMobileOpen(false)}
+              className="text-[#D97732]"
+            >
+              Wholesale Login
             </Link>
 
             <div className="border-t border-white/10 pt-8 mt-4 flex flex-col gap-6 text-gray-400 text-[14px] normal-case tracking-normal">

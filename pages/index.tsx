@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import CategoryGrid from "@/components/CategoryGrid"
 import WholesaleBanner from "@/components/WholesaleBanner"
+import StatsStrip from "@/components/StatsStrip"
 import Footer from "@/components/Footer"
 import LayoutContainer from "@/components/LayoutContainer"
 
@@ -28,28 +29,28 @@ export async function getServerSideProps() {
   })
 
   const jerseyResponse = await shopifyFetch({
-  query: getCollectionProductsQuery,
+    query: getCollectionProductsQuery,
 
-  variables: {
-    handle: "precision-jerseys",
-  },
-})
+    variables: {
+      handle: "precision-jerseys",
+    },
+  })
 
-const gloveResponse = await shopifyFetch({
-  query: getCollectionProductsQuery,
+  const gloveResponse = await shopifyFetch({
+    query: getCollectionProductsQuery,
 
-  variables: {
-    handle: "gloves",
-  },
-})
+    variables: {
+      handle: "gloves",
+    },
+  })
 
-const shirtResponse = await shopifyFetch({
-  query: getCollectionProductsQuery,
+  const shirtResponse = await shopifyFetch({
+    query: getCollectionProductsQuery,
 
-  variables: {
-    handle: "apparel",
-  },
-})
+    variables: {
+      handle: "apparel",
+    },
+  })
 
   return {
     props: {
@@ -106,6 +107,8 @@ export default function Home({
       <LayoutContainer>
         <WholesaleBanner />
       </LayoutContainer>
+
+      <StatsStrip />
 
       <Footer />
 

@@ -30,9 +30,12 @@ export default function WholesaleBanner() {
           {/* RIGHT */}
           <div className="flex-shrink-0 w-full md:w-auto">
 
-            <button className="w-full md:w-auto bg-[#D97732] hover:opacity-90 transition px-7 md:px-10 h-[50px] md:h-[56px] uppercase tracking-[2px] md:tracking-[3px] font-black text-[11px] md:text-sm text-white rounded-xl">
-              Apply Now →
-            </button>
+            <a
+  href="/wholesale/apply"
+  className="w-full md:w-auto inline-flex items-center justify-center bg-[#D97732] hover:opacity-90 transition px-7 md:px-10 h-[50px] md:h-[56px] uppercase tracking-[2px] md:tracking-[3px] font-black text-[11px] md:text-sm text-white rounded-xl"
+>
+  Apply Now →
+</a>
 
           </div>
 

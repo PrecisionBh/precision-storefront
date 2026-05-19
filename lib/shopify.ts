@@ -67,7 +67,11 @@ export async function createCart() {
 export async function addToCart(
   cartId: string,
   merchandiseId: string,
-  quantity = 1
+  quantity = 1,
+  attributes: {
+    key: string
+    value: string
+  }[] = []
 ) {
   const query = `
     mutation cartLinesAdd(
@@ -91,6 +95,10 @@ export async function addToCart(
                 id
 
                 quantity
+                attributes {
+  key
+  value
+}
 
                 merchandise {
                   ... on ProductVariant {
@@ -139,6 +147,7 @@ export async function addToCart(
       {
         merchandiseId,
         quantity,
+        attributes,
       },
     ],
   }
@@ -173,6 +182,10 @@ export async function getCart(
               id
 
               quantity
+              attributes {
+  key
+  value
+}
 
               merchandise {
                 ... on ProductVariant {
@@ -253,6 +266,10 @@ export async function removeFromCart(
                 id
 
                 quantity
+                attributes {
+  key
+  value
+}
 
                 merchandise {
                   ... on ProductVariant {
@@ -336,6 +353,10 @@ export async function updateCartItem(
                 id
 
                 quantity
+                attributes {
+  key
+  value
+}
 
                 merchandise {
                   ... on ProductVariant {

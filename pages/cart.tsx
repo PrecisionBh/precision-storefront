@@ -126,6 +126,45 @@ export default function CartPage() {
                             <h2 className="text-[18px] md:text-[26px] leading-[1.05] font-black uppercase break-words">
                               {product?.title}
                             </h2>
+                            
+                            {/* VARIANT */}
+{merchandise?.title !== "Default Title" && (
+  <p className="text-[11px] md:text-[12px] uppercase tracking-[2px] text-gray-500 font-bold mt-2">
+    {merchandise?.title}
+  </p>
+)}
+
+{/* CUSTOM ATTRIBUTES */}
+{Array.isArray(node?.attributes) &&
+  node.attributes.length > 0 && (
+
+  <div className="mt-3 space-y-1">
+
+    {node.attributes.map(
+      (attribute: any) => {
+
+        if (!attribute?.value)
+          return null
+
+        return (
+          <p
+            key={attribute.key}
+            className="text-[12px] text-gray-600 uppercase tracking-[1px]"
+          >
+            <span className="font-black">
+              {attribute.key}:
+            </span>{" "}
+            {attribute.value}
+          </p>
+        )
+      }
+    )}
+
+  </div>
+)}
+
+                            
+                     
 
                             <p className="text-[20px] md:text-[28px] font-black mt-2 md:mt-3">
                               $

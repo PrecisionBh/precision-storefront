@@ -32,9 +32,24 @@ query getCollectionProducts($handle: String!) {
           variants(first: 20) {
             edges {
               node {
+
                 id
                 title
                 availableForSale
+
+                selectedOptions {
+                  name
+                  value
+                }
+
+                image {
+                  url
+                }
+
+                price {
+                  amount
+                  currencyCode
+                }
               }
             }
           }
@@ -68,12 +83,22 @@ query getProduct($handle: String!) {
       }
     }
 
-    variants(first: 20) {
+    variants(first: 100) {
       edges {
         node {
+
           id
           title
           availableForSale
+
+          selectedOptions {
+            name
+            value
+          }
+
+          image {
+            url
+          }
 
           price {
             amount

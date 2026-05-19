@@ -12,6 +12,8 @@ type Props = {
   handle?: string
   variantId?: string
   availableForSale?: boolean
+  variants?: any[]
+  variantCount?: number
 }
 
 export default function ProductCard({
@@ -23,10 +25,20 @@ export default function ProductCard({
   handle,
   variantId,
   availableForSale,
+  variants = [],
+  variantCount,
 }: Props) {
 
   const isSoldOut =
-    availableForSale === false
+  variants.length > 0
+    ? !variants.some(
+        ({ node }: any) =>
+          node.availableForSale
+      )
+    : availableForSale === false
+
+  const hasMultipleVariants =
+    (variantCount || variants.length) > 1
 
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-black/5 shadow-[0_10px_40px_rgba(0,0,0,0.06)] flex flex-col h-full">
@@ -114,23 +126,67 @@ export default function ProductCard({
           {price}
         </p>
 
+        {/* VARIANT COUNT */}
+        {hasMultipleVariants && (
+          <p className="text-[11px] uppercase tracking-[2px] text-gray-500 mt-4 font-bold">
+            {variantCount || variants.length} Variants Available
+          </p>
+        )}
+
         <div className="flex-1" />
 
         {/* BUTTONS */}
         {!isSoldOut &&
           handle !== "precision-jerseys" && (
+
           <div className="flex flex-col gap-3 mt-5">
 
-            {variantId && (
-              <AddToCartButton
-                variantId={variantId}
-              />
-            )}
+            {/* MULTI VARIANT */}
+            {hasMultipleVariants ? (
 
-            {variantId && (
-              <BuyNowButton
-                variantId={variantId}
-              />
+              <Link
+                href={
+                  handle
+                    ? `/products/${handle}`
+                    : "/product"
+                }
+                className="
+                  w-full
+                  flex
+                  items-center
+                  justify-center
+                  bg-[#D97732]
+                  hover:bg-[#c96d2d]
+                  transition
+                  text-white
+                  font-bold
+                  uppercase
+                  tracking-[2px]
+                  px-8
+                  py-4
+                  rounded-full
+                "
+              >
+                Select Size
+              </Link>
+
+            ) : (
+
+              <>
+                {/* SINGLE VARIANT */}
+                {variantId && (
+                  <AddToCartButton
+                    variantId={variantId}
+                  />
+                )}
+
+                {variantId && (
+                  <BuyNowButton
+                    variantId={variantId}
+                  />
+                )}
+              </>
+
             )}
 
           </div>

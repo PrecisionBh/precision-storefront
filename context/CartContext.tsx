@@ -15,11 +15,18 @@ import {
   updateCartItem,
 } from "@/lib/shopify"
 
+type CartAttribute = {
+  key: string
+  value: string
+}
+
 type CartContextType = {
   cart: any
 
   addItem: (
-    merchandiseId: string
+    merchandiseId: string,
+    quantity?: number,
+    attributes?: CartAttribute[]
   ) => Promise<void>
 
   removeItem: (
@@ -92,7 +99,9 @@ export function CartProvider({
   /* ------------------------------------------ */
 
   async function addItem(
-    merchandiseId: string
+    merchandiseId: string,
+    quantity = 1,
+    attributes: CartAttribute[] = []
   ) {
     if (!cart?.id) return
 
@@ -101,7 +110,8 @@ export function CartProvider({
         await addToCart(
           cart.id,
           merchandiseId,
-          1
+          quantity,
+          attributes
         )
 
       setCart(updatedCart)

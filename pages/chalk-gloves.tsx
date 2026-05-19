@@ -121,17 +121,17 @@ export default function ChalkGlovesPage({
             </a>
 
             <a
-              href="#chalk"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Chalk
-            </a>
-
-            <a
               href="#gloves"
               className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
             >
               Gloves
+            </a>
+
+            <a
+              href="#chalk"
+              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
+            >
+              Chalk
             </a>
 
           </div>
@@ -142,17 +142,17 @@ export default function ChalkGlovesPage({
 
       {/* SECTIONS */}
       <CueSection
-        id="chalk"
-        eyebrow="Maximum Grip & Spin"
-        title="Performance Chalk"
-        products={chalk}
-      />
-
-      <CueSection
         id="gloves"
         eyebrow="Smooth Consistent Stroke"
         title="Performance Gloves"
         products={gloves}
+      />
+
+      <CueSection
+        id="chalk"
+        eyebrow="Maximum Grip & Spin"
+        title="Performance Chalk"
+        products={chalk}
       />
 
       <Footer />

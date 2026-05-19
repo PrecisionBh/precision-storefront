@@ -1,16 +1,136 @@
+import { useState } from "react"
+
 import AnnouncementBar from "@/components/AnnouncementBar"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import LayoutContainer from "@/components/LayoutContainer"
 
 export default function ContactPage() {
+
+  const [name, setName] =
+    useState("")
+
+  const [email, setEmail] =
+    useState("")
+
+  const [subject, setSubject] =
+    useState("")
+
+  const [message, setMessage] =
+    useState("")
+
+  const [loading, setLoading] =
+    useState(false)
+
+  const [showSuccess, setShowSuccess] =
+    useState(false)
+
+  const handleSubmit = async (
+    e: any
+  ) => {
+
+    e.preventDefault()
+
+    try {
+
+      setLoading(true)
+
+      const response =
+        await fetch(
+          "/api/contact",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+              name,
+              email,
+              subject,
+              message,
+            }),
+          }
+        )
+
+      const data =
+        await response.json()
+
+      if (data.success) {
+
+        setShowSuccess(true)
+
+        setName("")
+        setEmail("")
+        setSubject("")
+        setMessage("")
+
+      } else {
+
+        alert(
+          "Something went wrong. Please try again."
+        )
+      }
+
+    } catch (error) {
+
+      console.error(error)
+
+      alert(
+        "Something went wrong. Please try again."
+      )
+
+    } finally {
+
+      setLoading(false)
+    }
+  }
+
   return (
     <main className="bg-[#111111] text-white">
 
+      {/* SUCCESS MODAL */}
+      {showSuccess && (
+
+        <div className="fixed inset-0 z-[999] bg-black/70 flex items-center justify-center px-6">
+
+          <div className="bg-white text-black max-w-[520px] w-full rounded-3xl p-10 text-center shadow-2xl">
+
+            <div className="w-20 h-20 rounded-full bg-[#D97732] mx-auto flex items-center justify-center text-white text-4xl font-black">
+              ✓
+            </div>
+
+            <h2 className="text-[34px] font-black uppercase mt-6">
+              Message Sent
+            </h2>
+
+            <p className="text-gray-600 text-[17px] leading-relaxed mt-4">
+              Your email has been sent! We'll be in touch shortly.
+            </p>
+
+            <button
+              onClick={() =>
+                setShowSuccess(false)
+              }
+              className="mt-8 bg-[#D97732] hover:opacity-90 transition px-10 py-4 rounded-xl text-white uppercase tracking-[3px] text-sm font-black"
+            >
+              Close
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
       {/* STICKY HEADER STACK */}
       <div className="fixed top-0 left-0 w-full z-50">
+
         <AnnouncementBar />
         <Navbar />
+
       </div>
 
       {/* HERO */}
@@ -76,7 +196,7 @@ export default function ContactPage() {
                   </p>
 
                   <p className="font-semibold break-words">
-                    support@precisioncues.com
+                    precision.bh@gmail.com
                   </p>
                 </div>
 
@@ -95,31 +215,74 @@ export default function ContactPage() {
             </div>
 
             {/* RIGHT */}
-            <div className="space-y-5 md:space-y-8">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5 md:space-y-8"
+            >
 
               <input
                 type="text"
                 placeholder="Your Name"
+                value={name}
+                onChange={(e) =>
+                  setName(
+                    e.target.value
+                  )
+                }
+                required
                 className="w-full border border-black/10 bg-[#F7F7F7] px-5 md:px-6 py-4 md:py-5 text-base md:text-lg outline-none rounded-xl"
               />
 
               <input
                 type="email"
                 placeholder="Your Email"
+                value={email}
+                onChange={(e) =>
+                  setEmail(
+                    e.target.value
+                  )
+                }
+                required
+                className="w-full border border-black/10 bg-[#F7F7F7] px-5 md:px-6 py-4 md:py-5 text-base md:text-lg outline-none rounded-xl"
+              />
+
+              <input
+                type="text"
+                placeholder="Subject"
+                value={subject}
+                onChange={(e) =>
+                  setSubject(
+                    e.target.value
+                  )
+                }
+                required
                 className="w-full border border-black/10 bg-[#F7F7F7] px-5 md:px-6 py-4 md:py-5 text-base md:text-lg outline-none rounded-xl"
               />
 
               <textarea
                 placeholder="Your Message"
                 rows={7}
+                value={message}
+                onChange={(e) =>
+                  setMessage(
+                    e.target.value
+                  )
+                }
+                required
                 className="w-full border border-black/10 bg-[#F7F7F7] px-5 md:px-6 py-4 md:py-5 text-base md:text-lg outline-none resize-none rounded-xl"
               />
 
-              <button className="w-full md:w-auto bg-[#D97732] hover:opacity-90 transition px-8 md:px-12 py-4 md:py-5 uppercase tracking-[2px] md:tracking-[4px] text-[11px] md:text-sm font-black text-white rounded-xl">
-                Send Message
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full md:w-auto bg-[#D97732] hover:opacity-90 transition px-8 md:px-12 py-4 md:py-5 uppercase tracking-[2px] md:tracking-[4px] text-[11px] md:text-sm font-black text-white rounded-xl disabled:opacity-60"
+              >
+                {loading
+                  ? "Sending..."
+                  : "Send Message"}
               </button>
 
-            </div>
+            </form>
 
           </div>
 

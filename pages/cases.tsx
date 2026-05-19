@@ -11,53 +11,45 @@ import { getCollectionProductsQuery } from "@/lib/queries"
 
 export async function getServerSideProps() {
 
-  const hardCasesResponse = await shopifyFetch({
-    query: getCollectionProductsQuery,
+  const casesResponse =
+    await shopifyFetch({
+      query:
+        getCollectionProductsQuery,
 
-    variables: {
-      handle: "cases",
-    },
-  })
+      variables: {
+        handle: "cases",
+      },
+    })
 
-  const softCasesResponse = await shopifyFetch({
-    query: getCollectionProductsQuery,
-
-    variables: {
-      handle: "cases",
-    },
-  })
-
-  const hardCases =
-    hardCasesResponse.data.collection?.products?.edges || []
-
-  const softCases =
-    softCasesResponse.data.collection?.products?.edges || []
+  const cases =
+    casesResponse.data.collection?.products?.edges || []
 
   return {
     props: {
-      hardCases,
-      softCases,
+
+      cases,
 
       heroImage:
-        hardCases?.[0]?.node?.featuredImage?.url ||
-        softCases?.[0]?.node?.featuredImage?.url ||
+        cases?.[0]?.node?.featuredImage?.url ||
         null,
     },
   }
 }
 
 export default function CasesPage({
-  hardCases,
-  softCases,
+  cases,
   heroImage,
 }: any) {
+
   return (
     <main className="bg-[#111111] text-white">
 
       {/* STICKY HEADER STACK */}
       <div className="fixed top-0 left-0 w-full z-50 border-b border-white/5">
+
         <AnnouncementBar />
         <Navbar />
+
       </div>
 
       <div className="h-[86px] md:h-[108px]" />
@@ -90,7 +82,7 @@ export default function CasesPage({
               </h1>
 
               <p className="text-gray-300 text-[13px] md:text-[18px] leading-relaxed mt-3 md:mt-5 max-w-[620px]">
-                Hard and soft cue cases engineered to protect your investment while traveling in style.
+                Premium cue cases engineered to protect your investment while traveling in style.
               </p>
 
             </div>
@@ -101,58 +93,11 @@ export default function CasesPage({
 
       </section>
 
-      <div
-        id="top"
-        className="scroll-mt-[120px] md:scroll-mt-[160px]"
-      />
-
-      {/* TABS */}
-      <div className="bg-[#111111] border-b border-black/10 sticky top-[86px] md:top-[108px] z-40">
-
-        <LayoutContainer>
-
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
-
-            <a
-              href="#top"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-[#D97732] font-bold text-[10px] md:text-xs border-b-2 border-[#D97732] py-4 md:py-5 flex-shrink-0"
-            >
-              All
-            </a>
-
-            <a
-              href="#hard"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Hard Cases
-            </a>
-
-            <a
-              href="#soft"
-              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
-            >
-              Soft Cases
-            </a>
-
-          </div>
-
-        </LayoutContainer>
-
-      </div>
-
-      {/* SECTIONS */}
+      {/* PRODUCTS */}
       <CueSection
-        id="hard"
-        eyebrow="Maximum Protection"
-        title="Hard Cases"
-        products={hardCases}
-      />
-
-      <CueSection
-        id="soft"
-        eyebrow="Lightweight Everyday Carry"
-        title="Soft Cases"
-        products={softCases}
+        eyebrow="Premium Protection"
+        title="Browse Cases"
+        products={cases}
       />
 
       <Footer />
