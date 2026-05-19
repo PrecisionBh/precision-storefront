@@ -7,17 +7,40 @@ import {
   FaTimes,
 } from "react-icons/fa"
 
+import { useCart }
+from "@/context/CartContext"
+
 export default function Navbar() {
 
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] =
+    useState(false)
+
+  const { cart } = useCart()
+
+  const cartItems =
+    cart?.lines?.edges || []
+
+  const cartCount =
+    cartItems.reduce(
+      (total: number, item: any) =>
+        total + item.node.quantity,
+      0
+    )
+
+  const subtotal =
+    Math.round(
+      Number(
+        cart?.cost?.subtotalAmount?.amount || 0
+      )
+    )
 
   return (
     <>
-      <header className="w-full bg-black/20 backdrop-blur-3xl border-b border-white/10">
+      <header className="w-full bg-black/65 backdrop-blur-3xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
 
         <div className="max-w-[1920px] mx-auto px-5 md:px-14">
 
-          <div className="h-[68px] md:h-[82px] flex items-center justify-between">
+          <div className="h-[56px] md:h-[74px] flex items-center justify-between">
 
             {/* LEFT */}
             <div className="flex items-center gap-4">
@@ -31,13 +54,16 @@ export default function Navbar() {
               </button>
 
               {/* LOGO */}
-              <Link href="/" className="block flex-shrink-0">
+              <Link
+                href="/"
+                className="block flex-shrink-0"
+              >
 
-                <h1 className="text-[20px] md:text-[34px] font-black tracking-[2px] md:tracking-[4px] leading-none text-white">
+                <h1 className="text-[16px] md:text-[28px] font-black tracking-[2px] md:tracking-[4px] leading-none text-white">
                   PRECISION CUES
                 </h1>
 
-                <p className="text-[#D97732] text-[7px] md:text-[10px] tracking-[4px] md:tracking-[6px] uppercase mt-1 md:mt-2 font-semibold">
+                <p className="text-[#D97732] text-[6px] md:text-[9px] tracking-[4px] md:tracking-[6px] uppercase mt-1 md:mt-2 font-semibold">
                   Confidence Starts Here
                 </p>
 
@@ -48,45 +74,88 @@ export default function Navbar() {
             {/* DESKTOP NAV */}
             <nav className="hidden md:flex items-center gap-16 uppercase text-[15px] tracking-[2px] font-bold text-white">
 
-              <Link href="/" className="hover:text-[#D97732] transition">
+              <Link
+                href="/"
+                className="hover:text-[#D97732] transition"
+              >
                 Shop All
               </Link>
 
-              <Link href="/cues" className="hover:text-[#D97732] transition">
+              <Link
+                href="/cues"
+                className="hover:text-[#D97732] transition"
+              >
                 Cues
               </Link>
 
-              <Link href="/cases" className="hover:text-[#D97732] transition">
+              <Link
+                href="/cases"
+                className="hover:text-[#D97732] transition"
+              >
                 Cases
               </Link>
 
-              <Link href="/jerseys" className="hover:text-[#D97732] transition">
+              <Link
+                href="/jerseys"
+                className="hover:text-[#D97732] transition"
+              >
                 Jerseys
               </Link>
 
-              <Link href="/chalk-gloves" className="hover:text-[#D97732] transition">
+              <Link
+                href="/chalk-gloves"
+                className="hover:text-[#D97732] transition"
+              >
                 Chalk & Gloves
               </Link>
 
-              <Link href="/apparel" className="hover:text-[#D97732] transition">
+              <Link
+                href="/apparel"
+                className="hover:text-[#D97732] transition"
+              >
                 Apparel
               </Link>
 
             </nav>
 
             {/* RIGHT */}
-<Link
-  href="/cart"
-  className="relative text-[22px] md:text-[28px] text-white hover:text-[#D97732] transition flex-shrink-0"
->
+            <div className="flex items-center gap-5 md:gap-7">
 
-  <FaShoppingCart />
+              {/* DESKTOP TOTAL */}
+              {cartCount > 0 && (
+                <div className="hidden md:flex flex-col items-end">
 
-  <span className="absolute -top-2 -right-2 bg-[#D97732] text-white w-5 h-5 rounded-full text-[10px] flex items-center justify-center font-bold">
-    0
-  </span>
+                  <p className="text-[9px] uppercase tracking-[3px] text-gray-400">
+                    Cart Total
+                  </p>
 
-</Link>
+                  <p className="text-sm font-black text-white">
+                    ${subtotal}
+                  </p>
+
+                </div>
+              )}
+
+              {/* CART */}
+              <Link
+                href="/cart"
+                className="relative text-[22px] md:text-[28px] text-white hover:text-[#D97732] transition flex-shrink-0"
+              >
+
+                <FaShoppingCart />
+
+                {/* BADGE */}
+                {cartCount > 0 && (
+                  <span className="absolute -top-2.5 -right-2.5 bg-[#D97732] text-white min-w-[20px] h-[20px] px-1 rounded-full text-[10px] flex items-center justify-center font-black shadow-lg">
+
+                    {cartCount}
+
+                  </span>
+                )}
+
+              </Link>
+
+            </div>
 
           </div>
 
@@ -141,6 +210,44 @@ export default function Navbar() {
             </button>
 
           </div>
+
+          {/* MOBILE CART */}
+          {cartCount > 0 && (
+            <Link
+              href="/cart"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-between bg-[#111111] border border-white/10 rounded-2xl p-4 mb-10"
+            >
+
+              <div>
+
+                <p className="text-[10px] uppercase tracking-[3px] text-gray-400">
+                  Cart
+                </p>
+
+                <p className="text-lg font-black text-white mt-1">
+                  ${subtotal}
+                </p>
+
+              </div>
+
+              <div className="relative">
+
+                <FaShoppingCart
+                  className="text-white"
+                  size={26}
+                />
+
+                <span className="absolute -top-2 -right-2 bg-[#D97732] text-white min-w-[20px] h-[20px] px-1 rounded-full text-[10px] flex items-center justify-center font-black">
+
+                  {cartCount}
+
+                </span>
+
+              </div>
+
+            </Link>
+          )}
 
           {/* LINKS */}
           <nav className="flex flex-col gap-8 uppercase text-[15px] tracking-[3px] font-bold text-white">

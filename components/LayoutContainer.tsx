@@ -13,11 +13,11 @@ export default function LayoutContainer({
     <div
       className={`
         w-full
-        max-w-[1920px]
+        max-w-[1600px]
         mx-auto
-        px-14
-        md:px-20
-        xl:px-24
+        px-5
+        md:px-10
+        xl:px-14
         ${className}
       `}
     >

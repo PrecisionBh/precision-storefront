@@ -4,24 +4,24 @@ export default function Footer() {
   return (
     <footer className="bg-[#050505] text-white border-t border-white/10">
 
-      <div className="max-w-[1920px] mx-auto px-10 md:px-14 py-16">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-10 xl:px-14 py-10 md:py-14">
 
-        <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr_1fr] gap-14">
+        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-10 md:gap-12">
 
           {/* BRAND */}
           <div>
 
-            <h2 className="text-[42px] md:text-[64px] font-black uppercase leading-[0.9] tracking-[3px]">
+            <h2 className="text-[30px] md:text-[48px] font-black uppercase leading-[0.88] tracking-[2px]">
               Precision
               <br />
               Cues
             </h2>
 
-            <p className="text-[#D97732] uppercase tracking-[6px] text-xs font-bold mt-6">
+            <p className="text-[#D97732] uppercase tracking-[4px] md:tracking-[5px] text-[9px] md:text-[10px] font-bold mt-4 md:mt-5">
               Confidence Starts Here
             </p>
 
-            <p className="text-gray-400 text-lg leading-relaxed mt-8 max-w-[340px]">
+            <p className="text-gray-400 text-[13px] md:text-[16px] leading-relaxed mt-5 md:mt-6 max-w-[300px]">
               Premium billiards equipment crafted for players who demand the best.
             </p>
 
@@ -30,11 +30,11 @@ export default function Footer() {
           {/* SHOP */}
           <div>
 
-            <h3 className="text-lg font-black uppercase tracking-[4px] mb-7">
+            <h3 className="text-[13px] md:text-[15px] font-black uppercase tracking-[3px] mb-5">
               Shop
             </h3>
 
-            <div className="flex flex-col gap-3 text-gray-300 text-lg">
+            <div className="flex flex-col gap-2.5 text-gray-300 text-[14px] md:text-[15px]">
 
               <Link href="/cues" className="hover:text-[#D97732] transition">
                 Cues
@@ -63,11 +63,11 @@ export default function Footer() {
           {/* COMPANY */}
           <div>
 
-            <h3 className="text-lg font-black uppercase tracking-[4px] mb-7">
+            <h3 className="text-[13px] md:text-[15px] font-black uppercase tracking-[3px] mb-5">
               Company
             </h3>
 
-            <div className="flex flex-col gap-3 text-gray-300 text-lg">
+            <div className="flex flex-col gap-2.5 text-gray-300 text-[14px] md:text-[15px]">
 
               <Link href="/about" className="hover:text-[#D97732] transition">
                 About Us
@@ -88,11 +88,11 @@ export default function Footer() {
           {/* SUPPORT */}
           <div>
 
-            <h3 className="text-lg font-black uppercase tracking-[4px] mb-7">
+            <h3 className="text-[13px] md:text-[15px] font-black uppercase tracking-[3px] mb-5">
               Support
             </h3>
 
-            <div className="flex flex-col gap-3 text-gray-300 text-lg">
+            <div className="flex flex-col gap-2.5 text-gray-300 text-[14px] md:text-[15px]">
 
               <Link href="/shipping-policy" className="hover:text-[#D97732] transition">
                 Shipping Policy
@@ -109,7 +109,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM */}
-        <div className="border-t border-white/10 mt-14 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-gray-500 text-sm">
+        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-gray-500 text-[11px] md:text-[13px]">
 
           <p>
             © 2026 Precision Cues. All rights reserved.

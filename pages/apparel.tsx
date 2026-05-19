@@ -35,16 +35,26 @@ export async function getServerSideProps() {
     },
   })
 
+  const shirts =
+    shirtsResponse.data.collection?.products?.edges || []
+
+  const hoodies =
+    hoodiesResponse.data.collection?.products?.edges || []
+
+  const hats =
+    hatsResponse.data.collection?.products?.edges || []
+
   return {
     props: {
-      shirts:
-        shirtsResponse.data.collection?.products?.edges || [],
+      shirts,
+      hoodies,
+      hats,
 
-      hoodies:
-        hoodiesResponse.data.collection?.products?.edges || [],
-
-      hats:
-        hatsResponse.data.collection?.products?.edges || [],
+      heroImage:
+        shirts?.[0]?.node?.featuredImage?.url ||
+        hoodies?.[0]?.node?.featuredImage?.url ||
+        hats?.[0]?.node?.featuredImage?.url ||
+        null,
     },
   }
 }
@@ -53,44 +63,47 @@ export default function ApparelPage({
   shirts,
   hoodies,
   hats,
+  heroImage,
 }: any) {
   return (
     <main className="bg-[#111111] text-white">
 
       {/* STICKY HEADER STACK */}
-      <div className="fixed top-0 left-0 w-full z-50">
+      <div className="fixed top-0 left-0 w-full z-50 border-b border-white/5">
         <AnnouncementBar />
         <Navbar />
       </div>
 
-      <div className="h-[104px] md:h-[124px]" />
+      <div className="h-[86px] md:h-[108px]" />
 
       {/* HERO */}
-      <section className="relative h-[420px] md:h-[520px] overflow-hidden bg-black">
+      <section className="relative h-[300px] md:h-[420px] overflow-hidden bg-black">
 
-        <img
-          src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=2070&auto=format&fit=crop"
-          alt="Apparel Hero"
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-        />
+        {heroImage && (
+          <img
+            src={heroImage}
+            alt="Apparel Hero"
+            className="absolute inset-0 w-full h-full object-cover opacity-45"
+          />
+        )}
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/30" />
 
         <LayoutContainer className="relative z-10 h-full">
 
-          <div className="h-full flex items-end pb-10 md:pb-16">
+          <div className="h-full flex items-end pb-8 md:pb-12">
 
-            <div className="max-w-[920px]">
+            <div className="max-w-[760px]">
 
-              <p className="text-[#D97732] uppercase tracking-[4px] md:tracking-[8px] text-[10px] md:text-sm font-bold mb-4 md:mb-6">
+              <p className="text-[#D97732] uppercase tracking-[4px] md:tracking-[7px] text-[9px] md:text-xs font-bold mb-3 md:mb-4">
                 Lifestyle Collection
               </p>
 
-              <h1 className="text-[52px] md:text-[120px] leading-[0.9] font-black uppercase text-white">
+              <h1 className="text-[40px] md:text-[82px] leading-[0.88] font-black uppercase text-white">
                 Apparel
               </h1>
 
-              <p className="text-gray-300 text-sm md:text-[22px] leading-relaxed mt-5 md:mt-8 max-w-[760px]">
+              <p className="text-gray-300 text-[13px] md:text-[18px] leading-relaxed mt-3 md:mt-5 max-w-[620px]">
                 Everyday apparel built for players who live the game on and off the table.
               </p>
 
@@ -108,36 +121,36 @@ export default function ApparelPage({
       />
 
       {/* TABS */}
-      <div className="bg-[#111111] border-b border-black/10 sticky top-[104px] md:top-[124px] z-40">
+      <div className="bg-[#111111] border-b border-black/10 sticky top-[86px] md:top-[108px] z-40">
 
         <LayoutContainer>
 
-          <div className="flex items-center gap-8 md:gap-14 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
 
             <a
               href="#top"
-              className="uppercase tracking-[2px] md:tracking-[4px] text-[#D97732] font-bold text-[11px] md:text-sm border-b-2 border-[#D97732] py-4 md:py-6 flex-shrink-0"
+              className="uppercase tracking-[2px] md:tracking-[3px] text-[#D97732] font-bold text-[10px] md:text-xs border-b-2 border-[#D97732] py-4 md:py-5 flex-shrink-0"
             >
               All
             </a>
 
             <a
               href="#shirts"
-              className="uppercase tracking-[2px] md:tracking-[4px] text-gray-400 hover:text-white transition font-bold text-[11px] md:text-sm py-4 md:py-6 flex-shrink-0"
+              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
             >
               Shirts
             </a>
 
             <a
               href="#hoodies"
-              className="uppercase tracking-[2px] md:tracking-[4px] text-gray-400 hover:text-white transition font-bold text-[11px] md:text-sm py-4 md:py-6 flex-shrink-0"
+              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
             >
               Hoodies
             </a>
 
             <a
               href="#hats"
-              className="uppercase tracking-[2px] md:tracking-[4px] text-gray-400 hover:text-white transition font-bold text-[11px] md:text-sm py-4 md:py-6 flex-shrink-0"
+              className="uppercase tracking-[2px] md:tracking-[3px] text-gray-400 hover:text-white transition font-bold text-[10px] md:text-xs py-4 md:py-5 flex-shrink-0"
             >
               Hats
             </a>

@@ -15,200 +15,127 @@ export default function CategoryGrid({
   gloveImage,
   shirtImage,
 }: Props) {
-
   return (
-    <section className="bg-black text-white px-4 md:px-10 py-12 md:py-16">
+    <section className="bg-black text-white px-3 md:px-6 py-8 md:py-12">
 
-      <div className="text-center mb-10 md:mb-16">
-        <h2 className="text-[42px] md:text-[110px] font-black uppercase tracking-[2px] md:tracking-[4px] leading-none">
+      <div className="text-center mb-8 md:mb-10">
+        <h2 className="text-[34px] md:text-[76px] font-black uppercase tracking-[2px] md:tracking-[3px] leading-none">
           Category
         </h2>
       </div>
 
-      {/* TOP GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
 
-        {/* CUES */}
-        <Link
+        <CategoryCard
           href="/cues"
-          className="relative  overflow-hidden group cursor-pointer bg-[#0F172A] block rounded-2xl"
-        >
+          image={cueImage}
+          eyebrow="Precision Collection"
+          title="Cues"
+          description="Full carbon fiber construction. Engineered for serious players."
+        />
 
-          {cueImage && (
-            <img
-              src={cueImage}
-              alt="Cues"
-              className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-700"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
-
-          <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-10">
-
-            <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[6px] text-[10px] md:text-sm font-bold mb-2 md:mb-4">
-              Precision Collection
-            </p>
-
-            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
-              Cues
-            </h3>
-
-            <p className="text-gray-300 mt-3 md:mt-6 text-sm md:text-xl max-w-[400px] leading-relaxed">
-              Full carbon fiber construction. Engineered for serious players.
-            </p>
-
-          </div>
-
-        </Link>
-
-        {/* CASES */}
-        <Link
+        <CategoryCard
           href="/cases"
-          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
-        >
+          image={caseImage}
+          eyebrow="Protection Series"
+          title="Cases"
+          description="Hard & soft cases built to protect your investment."
+        />
 
-          {caseImage && (
-            <img
-              src={caseImage}
-              alt="Cases"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
-
-          <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-10">
-
-            <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[6px] text-[10px] md:text-sm font-bold mb-2 md:mb-4">
-              Protection Series
-            </p>
-
-            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
-              Cases
-            </h3>
-
-            <p className="text-gray-300 mt-3 md:mt-6 text-sm md:text-xl max-w-[400px] leading-relaxed">
-              Hard & soft cases built to protect your investment.
-            </p>
-
-          </div>
-
-        </Link>
-
-        {/* JERSEYS */}
-        <Link
+        <CategoryCard
           href="/jerseys"
-          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
-        >
+          image={jerseyImage}
+          eyebrow="Apex Series"
+          title="Jerseys"
+          description="Premium performance apparel built for competition."
+        />
 
-          {jerseyImage && (
-            <img
-              src={jerseyImage}
-              alt="Jerseys"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
-
-          <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-10">
-
-            <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[6px] text-[10px] md:text-sm font-bold mb-2 md:mb-4">
-              Apex Series
-            </p>
-
-            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
-              Jerseys
-            </h3>
-
-            <p className="text-gray-300 mt-3 md:mt-6 text-sm md:text-xl max-w-[400px] leading-relaxed">
-              Premium performance apparel built for competition.
-            </p>
-
-          </div>
-
-        </Link>
-
-        {/* GLOVES */}
-        <Link
+        <CategoryCard
           href="/chalk-gloves"
-          className="relative h-[260px] md:h-[340px] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
-        >
-
-          {gloveImage && (
-            <img
-              src={gloveImage}
-              alt="Gloves"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
-
-          <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-10">
-
-            <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[6px] text-[10px] md:text-sm font-bold mb-2 md:mb-4">
-              Essential Gear
-            </p>
-
-            <h3 className="text-[34px] md:text-[70px] leading-none font-black uppercase break-words">
-              Chalk & Gloves
-            </h3>
-
-            <p className="text-gray-300 mt-3 md:mt-6 text-sm md:text-xl max-w-[400px] leading-relaxed">
-              Accessories trusted by serious competitive players.
-            </p>
-
-          </div>
-
-        </Link>
+          image={gloveImage}
+          eyebrow="Essential Gear"
+          title="Chalk & Gloves"
+          description="Accessories trusted by serious competitive players."
+        />
 
       </div>
 
-      {/* APPAREL CENTERED */}
-      <div className="flex justify-center mt-4 md:mt-6">
+      <div className="flex justify-center mt-3 md:mt-5">
 
-        <Link
+        <CategoryCard
           href="/apparel"
-          className="relative h-[260px] md:h-[340px] w-full md:w-[60%] overflow-hidden group cursor-pointer bg-[#111827] block rounded-2xl"
-        >
-
-          {shirtImage && (
-            <img
-              src={shirtImage}
-              alt="Apparel"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700"
-            />
-          )}
-
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute left-0 top-0 w-[4px] h-full bg-[#D97732]" />
-
-          <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-10">
-
-            <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[6px] text-[10px] md:text-sm font-bold mb-2 md:mb-4">
-              Lifestyle Collection
-            </p>
-
-            <h3 className="text-[34px] md:text-[54px] leading-none font-black uppercase break-words">
-              Apparel
-            </h3>
-
-            <p className="text-gray-300 mt-3 md:mt-6 text-sm md:text-xl max-w-[500px] leading-relaxed">
-              Everyday apparel built for players who live the game.
-            </p>
-
-          </div>
-
-        </Link>
+          image={shirtImage}
+          eyebrow="Lifestyle Collection"
+          title="Apparel"
+          description="Everyday apparel built for players who live the game."
+          centered
+        />
 
       </div>
 
     </section>
+  )
+}
+
+function CategoryCard({
+  href,
+  image,
+  eyebrow,
+  title,
+  description,
+  centered = false,
+}: {
+  href: string
+  image?: string
+  eyebrow: string
+  title: string
+  description: string
+  centered?: boolean
+}) {
+  return (
+    <Link
+      href={href}
+      className={`
+        relative
+        h-[220px]
+        md:h-[280px]
+        overflow-hidden
+        group
+        cursor-pointer
+        bg-[#111827]
+        block
+        rounded-2xl
+        ${centered ? "w-full md:w-[58%]" : ""}
+      `}
+    >
+
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover opacity-58 group-hover:scale-105 transition duration-700"
+        />
+      )}
+
+      <div className="absolute inset-0 bg-black/58" />
+      <div className="absolute left-0 top-0 w-[3px] h-full bg-[#D97732]" />
+
+      <div className="relative z-10 h-full flex flex-col justify-end p-5 md:p-7">
+
+        <p className="text-[#D97732] uppercase tracking-[3px] md:tracking-[5px] text-[9px] md:text-[11px] font-bold mb-2 md:mb-3">
+          {eyebrow}
+        </p>
+
+        <h3 className="text-[30px] md:text-[44px] leading-none font-black uppercase break-words">
+          {title}
+        </h3>
+
+        <p className="text-gray-300 mt-3 md:mt-4 text-[13px] md:text-[16px] max-w-[360px] leading-relaxed">
+          {description}
+        </p>
+
+      </div>
+
+    </Link>
   )
 }
