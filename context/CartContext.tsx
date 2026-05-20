@@ -63,36 +63,62 @@ export function CartProvider({
   }, [])
 
   async function initializeCart() {
-    try {
-      const existingCartId =
-        localStorage.getItem("cartId")
+  try {
 
-      if (existingCartId) {
+    const existingCartId =
+      localStorage.getItem("cartId")
+
+    if (existingCartId) {
+
+      try {
+
         const existingCart =
           await getCart(existingCartId)
 
-        if (existingCart) {
+        if (
+          existingCart?.id
+        ) {
+
           setCart(existingCart)
+
           return
         }
+
+      } catch (err) {
+
+        console.log(
+          "OLD CART INVALID — CREATING NEW CART"
+        )
+
+        localStorage.removeItem(
+          "cartId"
+        )
       }
-
-      const newCart =
-        await createCart()
-
-      localStorage.setItem(
-        "cartId",
-        newCart.id
-      )
-
-      setCart(newCart)
-    } catch (err) {
-      console.error(
-        "Cart init error:",
-        err
-      )
     }
+
+    const newCart =
+      await createCart()
+
+    console.log(
+      "NEW CART CREATED:",
+      newCart
+    )
+
+    localStorage.setItem(
+      "cartId",
+      newCart.id
+    )
+
+    setCart(newCart)
+
+  } catch (err) {
+
+    console.error(
+      "Cart init error:",
+      err
+    )
   }
+}
 
   /* ------------------------------------------ */
   /* ------------ ADD ITEM -------------------- */
