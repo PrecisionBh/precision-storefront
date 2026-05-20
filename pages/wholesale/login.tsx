@@ -6,7 +6,10 @@ import LayoutContainer from "@/components/LayoutContainer"
 export default function WholesaleLoginPage() {
 
   const shopifyLogin =
-  "https://shopify.com/67781132482/account/login"
+    "https://shopify.com/67781132482/authentication/login"
+
+  const forgotPassword =
+    "https://shopify.com/67781132482/account/reset"
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
@@ -91,7 +94,7 @@ export default function WholesaleLoginPage() {
               <div className="mt-5">
 
                 <a
-                  href={shopifyLogin}
+                  href={forgotPassword}
                   className="text-[#D97732] text-sm font-bold hover:underline"
                 >
                   Forgot Password?
