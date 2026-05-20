@@ -183,7 +183,10 @@ export function CartProvider({
     if (!cart?.checkoutUrl) return
 
     window.location.href =
-      cart.checkoutUrl
+  cart.checkoutUrl.replace(
+    "https://www.precisioncues.com",
+    "https://70m4ur-ty.myshopify.com"
+  )
   }
 
   return (
