@@ -6,7 +6,7 @@ import LayoutContainer from "@/components/LayoutContainer"
 export default function WholesaleLoginPage() {
 
   const shopifyLogin =
-  "https://account.precisioncues.com"
+  "https://shopify.com/67781132482/account/login"
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
