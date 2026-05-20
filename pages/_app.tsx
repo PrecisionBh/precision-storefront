@@ -9,6 +9,9 @@ import {
   WholesaleProvider,
 } from "@/context/WholesaleContext"
 
+import EmailPopup
+from "@/components/EmailPopup"
+
 export default function App({
   Component,
   pageProps,
@@ -19,6 +22,8 @@ export default function App({
       <CartProvider>
 
         <Component {...pageProps} />
+
+        <EmailPopup />
 
       </CartProvider>
 
