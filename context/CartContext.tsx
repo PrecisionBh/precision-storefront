@@ -180,14 +180,33 @@ export function CartProvider({
   /* ------------------------------------------ */
 
   function checkout() {
-    if (!cart?.checkoutUrl) return
 
-    window.location.href =
-  cart.checkoutUrl.replace(
-    "https://www.precisioncues.com",
-    "https://70m4ur-ty.myshopify.com"
+  if (!cart?.checkoutUrl) return
+
+  console.log(
+    "CHECKOUT URL:",
+    cart.checkoutUrl
   )
-  }
+
+  const fixedCheckoutUrl =
+    cart.checkoutUrl
+      .replace(
+        "https://www.precisioncues.com",
+        "https://70m4ur-ty.myshopify.com"
+      )
+      .replace(
+        "https://precisioncues.com",
+        "https://70m4ur-ty.myshopify.com"
+      )
+
+  console.log(
+    "FIXED URL:",
+    fixedCheckoutUrl
+  )
+
+  window.location.href =
+    fixedCheckoutUrl
+}
 
   return (
     <CartContext.Provider
