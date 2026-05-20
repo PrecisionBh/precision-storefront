@@ -10,12 +10,23 @@ import {
 import { useCart }
 from "@/context/CartContext"
 
+import {
+  useWholesale,
+} from "@/context/WholesaleContext"
+
 export default function Navbar() {
 
   const [mobileOpen, setMobileOpen] =
     useState(false)
 
   const { cart } = useCart()
+
+  const {
+    isWholesale,
+    getWholesalePrice,
+    tier,
+    logoutWholesale,
+  } = useWholesale()
 
   const cartItems =
     cart?.lines?.edges || []
@@ -27,11 +38,40 @@ export default function Navbar() {
       0
     )
 
+  const wholesaleSubtotal =
+    cartItems.reduce(
+      (
+        total: number,
+        item: any
+      ) => {
+
+        const price =
+          Number(
+            item?.node
+              ?.merchandise
+              ?.price
+              ?.amount || 0
+          )
+
+        const quantity =
+          item?.node?.quantity || 1
+
+        return (
+          total +
+          (
+            isWholesale
+              ? getWholesalePrice(price)
+              : price
+          ) * quantity
+        )
+
+      },
+      0
+    )
+
   const subtotal =
     Math.round(
-      Number(
-        cart?.cost?.subtotalAmount?.amount || 0
-      )
+      wholesaleSubtotal || 0
     )
 
   return (
@@ -136,13 +176,31 @@ export default function Navbar() {
                 </div>
               )}
 
-              {/* WHOLESALE LOGIN */}
-              <Link
-                href="/wholesale/login"
-                className="hidden md:inline-flex items-center justify-center border border-[#D97732] text-[#D97732] hover:bg-[#D97732] hover:text-white transition px-5 h-[42px] rounded-xl uppercase tracking-[2px] text-[11px] font-black"
-              >
-                Wholesale Login
-              </Link>
+              {/* WHOLESALE STATUS */}
+              {isWholesale ? (
+
+                <button
+                  onClick={() => {
+
+                    logoutWholesale()
+
+                    window.location.reload()
+                  }}
+                  className="hidden md:inline-flex items-center justify-center border border-[#D97732] bg-[#D97732] text-white hover:opacity-90 transition px-5 h-[42px] rounded-xl uppercase tracking-[2px] text-[11px] font-black"
+                >
+                  {tier}
+                </button>
+
+              ) : (
+
+                <Link
+                  href="/wholesale/login"
+                  className="hidden md:inline-flex items-center justify-center border border-[#D97732] text-[#D97732] hover:bg-[#D97732] hover:text-white transition px-5 h-[42px] rounded-xl uppercase tracking-[2px] text-[11px] font-black"
+                >
+                  Wholesale Login
+                </Link>
+
+              )}
 
               {/* CART */}
               <Link
@@ -308,13 +366,31 @@ export default function Navbar() {
               Apparel
             </Link>
 
-            <Link
-              href="/wholesale/login"
-              onClick={() => setMobileOpen(false)}
-              className="text-[#D97732]"
-            >
-              Wholesale Login
-            </Link>
+            {isWholesale ? (
+
+              <button
+                onClick={() => {
+
+                  logoutWholesale()
+
+                  window.location.reload()
+                }}
+                className="text-left text-[#D97732]"
+              >
+                {tier}
+              </button>
+
+            ) : (
+
+              <Link
+                href="/wholesale/login"
+                onClick={() => setMobileOpen(false)}
+                className="text-[#D97732]"
+              >
+                Wholesale Login
+              </Link>
+
+            )}
 
             <div className="border-t border-white/10 pt-8 mt-4 flex flex-col gap-6 text-gray-400 text-[14px] normal-case tracking-normal">
 

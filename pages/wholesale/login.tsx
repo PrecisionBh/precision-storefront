@@ -1,7 +1,3 @@
-import { useState } from "react"
-
-import { useRouter } from "next/router"
-
 import AnnouncementBar from "@/components/AnnouncementBar"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
@@ -9,80 +5,8 @@ import LayoutContainer from "@/components/LayoutContainer"
 
 export default function WholesaleLoginPage() {
 
-  const router =
-    useRouter()
-
-  const [email, setEmail] =
-    useState("")
-
-  const [password, setPassword] =
-    useState("")
-
-  const [loading, setLoading] =
-    useState(false)
-
-  const [error, setError] =
-    useState("")
-
-  const handleLogin = async (
-    e: any
-  ) => {
-
-    e.preventDefault()
-
-    try {
-
-      setLoading(true)
-      setError("")
-
-      const response =
-        await fetch(
-          "/api/wholesale-login",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          }
-        )
-
-      const data =
-        await response.json()
-
-      if (data.success) {
-
-        router.push(
-          "/wholesale"
-        )
-
-      } else {
-
-        setError(
-          data.error ||
-          "Invalid login credentials."
-        )
-      }
-
-    } catch (err) {
-
-      console.error(err)
-
-      setError(
-        "Something went wrong."
-      )
-
-    } finally {
-
-      setLoading(false)
-    }
-  }
+  const shopifyLogin =
+  "https://account.precisioncues.com"
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
@@ -141,72 +65,58 @@ export default function WholesaleLoginPage() {
 
           <div className="max-w-[620px] mx-auto">
 
-            <div className="bg-[#F7F7F7] border border-black/5 rounded-3xl p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
+            <div className="bg-[#F7F7F7] border border-black/5 rounded-3xl p-8 md:p-12 shadow-[0_10px_40px_rgba(0,0,0,0.06)] text-center">
 
               <p className="text-[#D97732] uppercase tracking-[4px] text-[11px] font-black mb-4">
                 Dealer Access
               </p>
 
               <h2 className="text-[38px] md:text-[58px] leading-[0.95] font-black uppercase">
-                Sign In
+                Login With Shop
               </h2>
 
-              <p className="text-gray-500 text-[15px] leading-relaxed mt-4">
-                Approved dealers can log in below to access wholesale pricing and dealer-only inventory.
+              <p className="text-gray-500 text-[15px] leading-relaxed mt-5 max-w-[460px] mx-auto">
+                Existing Precision wholesale dealers can continue using their Shop / Shopify account credentials.
               </p>
 
-              <form
-                onSubmit={handleLogin}
-                className="mt-10 space-y-6"
+              {/* LOGIN */}
+              <a
+                href={shopifyLogin}
+                className="mt-10 w-full flex items-center justify-center bg-black hover:bg-[#D97732] transition px-10 py-5 uppercase tracking-[3px] text-sm font-black rounded-2xl text-white shadow-lg"
               >
+                Login With Shop
+              </a>
 
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) =>
-                    setEmail(
-                      e.target.value
-                    )
-                  }
-                  required
-                  className="w-full border border-black/10 bg-white px-6 py-5 rounded-xl outline-none"
-                />
+              {/* FORGOT PASSWORD */}
+              <div className="mt-5">
 
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) =>
-                    setPassword(
-                      e.target.value
-                    )
-                  }
-                  required
-                  className="w-full border border-black/10 bg-white px-6 py-5 rounded-xl outline-none"
-                />
-
-                {error && (
-
-                  <div className="bg-red-100 border border-red-200 text-red-700 px-5 py-4 rounded-xl text-sm font-medium">
-                    {error}
-                  </div>
-
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#D97732] hover:opacity-90 transition px-10 py-5 uppercase tracking-[3px] text-sm font-black text-white rounded-xl disabled:opacity-60"
+                <a
+                  href={shopifyLogin}
+                  className="text-[#D97732] text-sm font-bold hover:underline"
                 >
-                  {loading
-                    ? "Signing In..."
-                    : "Login To Wholesale"}
-                </button>
+                  Forgot Password?
+                </a>
 
-              </form>
+              </div>
 
-              <div className="mt-8 text-center">
+              {/* CREATE ACCOUNT */}
+              <div className="mt-10 border-t border-black/10 pt-8">
+
+                <p className="text-gray-500 text-sm">
+                  Approved to become a dealer?
+                </p>
+
+                <a
+                  href={shopifyLogin}
+                  className="inline-block mt-4 bg-[#D97732] hover:bg-black transition px-8 py-4 rounded-2xl uppercase tracking-[2px] text-sm font-black text-white"
+                >
+                  Create Your Dealer Login
+                </a>
+
+              </div>
+
+              {/* APPLY */}
+              <div className="mt-10 border-t border-black/10 pt-8">
 
                 <p className="text-gray-500 text-sm">
                   Interested in becoming a dealer?
@@ -214,7 +124,7 @@ export default function WholesaleLoginPage() {
 
                 <a
                   href="/wholesale/apply"
-                  className="inline-block mt-3 text-[#D97732] font-black uppercase tracking-[2px] text-sm"
+                  className="inline-block mt-4 text-[#D97732] font-black uppercase tracking-[2px] text-sm"
                 >
                   Apply Here
                 </a>

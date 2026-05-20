@@ -12,6 +12,10 @@ import {
 import { useCart }
 from "@/context/CartContext"
 
+import {
+  useWholesale,
+} from "@/context/WholesaleContext"
+
 export default function CartPage() {
 
   const {
@@ -21,11 +25,45 @@ export default function CartPage() {
     checkout,
   } = useCart()
 
+  const {
+    isWholesale,
+    getWholesalePrice,
+    tier,
+  } = useWholesale()
+
   const cartItems =
     cart?.lines?.edges || []
 
   const subtotal =
     cart?.cost?.subtotalAmount?.amount
+
+  const wholesaleSubtotal =
+    cartItems.reduce(
+      (
+        total: number,
+        { node }: any
+      ) => {
+
+        const price =
+          Number(
+            node?.merchandise?.price?.amount || 0
+          )
+
+        const quantity =
+          node?.quantity || 1
+
+        return (
+          total +
+          (
+            isWholesale
+              ? getWholesalePrice(price)
+              : price
+          ) * quantity
+        )
+
+      },
+      0
+    )
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
@@ -126,54 +164,101 @@ export default function CartPage() {
                             <h2 className="text-[18px] md:text-[26px] leading-[1.05] font-black uppercase break-words">
                               {product?.title}
                             </h2>
-                            
+
                             {/* VARIANT */}
-{merchandise?.title !== "Default Title" && (
-  <p className="text-[11px] md:text-[12px] uppercase tracking-[2px] text-gray-500 font-bold mt-2">
-    {merchandise?.title}
-  </p>
-)}
+                            {merchandise?.title !== "Default Title" && (
+                              <p className="text-[11px] md:text-[12px] uppercase tracking-[2px] text-gray-500 font-bold mt-2">
+                                {merchandise?.title}
+                              </p>
+                            )}
 
-{/* CUSTOM ATTRIBUTES */}
-{Array.isArray(node?.attributes) &&
-  node.attributes.length > 0 && (
+                            {/* CUSTOM ATTRIBUTES */}
+                            {Array.isArray(node?.attributes) &&
+                              node.attributes.length > 0 && (
 
-  <div className="mt-3 space-y-1">
+                              <div className="mt-3 space-y-1">
 
-    {node.attributes.map(
-      (attribute: any) => {
+                                {node.attributes.map(
+                                  (attribute: any) => {
 
-        if (!attribute?.value)
-          return null
+                                    if (!attribute?.value)
+                                      return null
 
-        return (
-          <p
-            key={attribute.key}
-            className="text-[12px] text-gray-600 uppercase tracking-[1px]"
-          >
-            <span className="font-black">
-              {attribute.key}:
-            </span>{" "}
-            {attribute.value}
-          </p>
-        )
-      }
-    )}
+                                    return (
+                                      <p
+                                        key={attribute.key}
+                                        className="text-[12px] text-gray-600 uppercase tracking-[1px]"
+                                      >
+                                        <span className="font-black">
+                                          {attribute.key}:
+                                        </span>{" "}
+                                        {attribute.value}
+                                      </p>
+                                    )
+                                  }
+                                )}
 
-  </div>
-)}
+                              </div>
+                            )}
 
-                            
-                     
+                            {/* PRICE */}
+                            <div className="mt-2 md:mt-3">
 
-                            <p className="text-[20px] md:text-[28px] font-black mt-2 md:mt-3">
-                              $
-                              {Math.round(
-                                Number(
-                                  merchandise?.price?.amount
-                                )
+                              {isWholesale ? (
+
+                                <>
+
+                                  <p className="text-[22px] md:text-[30px] font-black text-[#D97732]">
+
+                                    $
+
+                                    {getWholesalePrice(
+                                      Number(
+                                        merchandise?.price?.amount
+                                      )
+                                    )}
+
+                                  </p>
+
+                                  <div className="flex items-center gap-3 mt-1">
+
+                                    <p className="text-sm text-gray-400 line-through font-semibold">
+
+                                      $
+
+                                      {Math.round(
+                                        Number(
+                                          merchandise?.price?.amount
+                                        )
+                                      )}
+
+                                    </p>
+
+                                    <p className="text-[10px] uppercase tracking-[2px] font-black text-[#D97732]">
+                                      {tier}
+                                    </p>
+
+                                  </div>
+
+                                </>
+
+                              ) : (
+
+                                <p className="text-[20px] md:text-[28px] font-black">
+
+                                  $
+
+                                  {Math.round(
+                                    Number(
+                                      merchandise?.price?.amount
+                                    )
+                                  )}
+
+                                </p>
+
                               )}
-                            </p>
+
+                            </div>
 
                           </div>
 
@@ -273,7 +358,7 @@ export default function CartPage() {
                     <span>
                       $
                       {Math.round(
-                        Number(subtotal || 0)
+                        wholesaleSubtotal || 0
                       )}
                     </span>
 
@@ -301,7 +386,7 @@ export default function CartPage() {
                   <span className="text-[28px] md:text-[42px] font-black">
                     $
                     {Math.round(
-                      Number(subtotal || 0)
+                      wholesaleSubtotal || 0
                     )}
                   </span>
 
@@ -348,7 +433,7 @@ export default function CartPage() {
             <p className="text-xl font-black">
               $
               {Math.round(
-                Number(subtotal || 0)
+                wholesaleSubtotal || 0
               )}
             </p>
 

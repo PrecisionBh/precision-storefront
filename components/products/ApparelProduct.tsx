@@ -6,6 +6,9 @@ import Footer from "@/components/Footer"
 import LayoutContainer from "@/components/LayoutContainer"
 
 import { useCart } from "@/context/CartContext"
+import {
+  useWholesale,
+} from "@/context/WholesaleContext"
 
 import {
   getOptionValue,
@@ -20,6 +23,12 @@ export default function ApparelProduct({
 
   const { addItem } =
     useCart()
+
+    const {
+  isWholesale,
+  getWholesalePrice,
+  tier,
+} = useWholesale()
 
   const variants =
     product?.variants?.edges || []
@@ -232,17 +241,64 @@ export default function ApparelProduct({
                 {product?.title}
               </h1>
 
-              <p className="text-[28px] font-black mt-5">
+              {/* PRICE */}
+<div className="mt-5">
 
-                $
+  {isWholesale ? (
 
-                {Math.round(
-                  Number(
-                    selectedVariant?.price?.amount
-                  )
-                )}
+    <>
 
-              </p>
+      <p className="text-[32px] md:text-[38px] font-black text-[#D97732]">
+
+        $
+
+        {getWholesalePrice(
+          Number(
+            selectedVariant?.price?.amount
+          )
+        )}
+
+      </p>
+
+      <div className="flex items-center gap-3 mt-2">
+
+        <p className="text-lg text-gray-400 line-through font-semibold">
+
+          $
+
+          {Math.round(
+            Number(
+              selectedVariant?.price?.amount
+            )
+          )}
+
+        </p>
+
+        <p className="text-[10px] uppercase tracking-[2px] font-black text-[#D97732]">
+          {tier}
+        </p>
+
+      </div>
+
+    </>
+
+  ) : (
+
+    <p className="text-[28px] font-black">
+
+      $
+
+      {Math.round(
+        Number(
+          selectedVariant?.price?.amount
+        )
+      )}
+
+    </p>
+
+  )}
+
+</div>
 
               <p className="text-gray-600 text-[16px] leading-[1.9] mt-6 whitespace-pre-line">
                 {product?.description}

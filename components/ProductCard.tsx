@@ -3,6 +3,10 @@ import Link from "next/link"
 import AddToCartButton from "@/components/AddToCartButton"
 import BuyNowButton from "@/components/BuyNowButton"
 
+import {
+  useWholesale,
+} from "@/context/WholesaleContext"
+
 type Props = {
   image?: string
   title: string
@@ -29,13 +33,19 @@ export default function ProductCard({
   variantCount,
 }: Props) {
 
+  const {
+    isWholesale,
+    getWholesalePrice,
+    tier,
+  } = useWholesale()
+
   const isSoldOut =
-  variants.length > 0
-    ? !variants.some(
-        ({ node }: any) =>
-          node.availableForSale
-      )
-    : availableForSale === false
+    variants.length > 0
+      ? !variants.some(
+          ({ node }: any) =>
+            node.availableForSale
+        )
+      : availableForSale === false
 
   const hasMultipleVariants =
     (variantCount || variants.length) > 1
@@ -122,9 +132,48 @@ export default function ProductCard({
 
         </Link>
 
-        <p className="text-[20px] md:text-[24px] font-black text-black mt-3 md:mt-5">
-          {price}
-        </p>
+        {/* PRICE */}
+        <div className="mt-3 md:mt-5">
+
+          {isWholesale ? (
+
+            <>
+
+              <p className="text-[22px] md:text-[28px] font-black text-[#D97732]">
+                $
+                {getWholesalePrice(
+                  Number(
+                    price.replace(
+                      "$",
+                      ""
+                    )
+                  )
+                )}
+              </p>
+
+              <div className="flex items-center gap-3 mt-1">
+
+                <p className="text-sm text-gray-400 line-through">
+                  {price}
+                </p>
+
+                <p className="text-[10px] uppercase tracking-[2px] font-black text-[#D97732]">
+                  {tier}
+                </p>
+
+              </div>
+
+            </>
+
+          ) : (
+
+            <p className="text-[20px] md:text-[24px] font-black text-black">
+              {price}
+            </p>
+
+          )}
+
+        </div>
 
         {/* VARIANT COUNT */}
         {hasMultipleVariants && (

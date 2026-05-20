@@ -71,9 +71,9 @@ export default function ProductPage({
   }
 
   if (
-  product?.productType ===
-  "gloves"
-) {
+    product?.productType ===
+    "gloves"
+  ) {
     return (
       <GloveProduct
         product={product}
