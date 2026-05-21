@@ -87,7 +87,7 @@ export default function WholesaleLoginPage() {
       )
 
       window.location.href =
-        "/"
+        "/wholesale"
 
     } catch (err: any) {
 
@@ -148,7 +148,7 @@ export default function WholesaleLoginPage() {
         }
 
         alert(
-          "Password reset email sent."
+          "Password reset email sent. Please check your email."
         )
 
       } catch (err: any) {
@@ -232,8 +232,17 @@ export default function WholesaleLoginPage() {
               </h2>
 
               <p className="text-gray-500 text-[15px] leading-relaxed mt-5 max-w-[460px] mx-auto text-center">
-                Login using your existing Shop / Shopify customer account credentials.
+                Login using your dealer account email and password.
               </p>
+
+              <div className="mt-4 bg-[#FFF7F0] border border-[#D97732]/20 rounded-2xl p-4">
+
+                <p className="text-[13px] text-gray-700 leading-relaxed text-center">
+                  If you've ordered from Precision before but cannot login,
+                  click "Forgot Password" below to create or reset your dealer password.
+                </p>
+
+              </div>
 
               <div className="mt-10">
 
@@ -304,7 +313,7 @@ export default function WholesaleLoginPage() {
                     handleForgotPassword
                   }
                   disabled={loading}
-                  className="mt-4 text-sm text-[#D97732] hover:underline text-center w-full"
+                  className="mt-5 text-sm text-[#D97732] hover:underline text-center w-full"
                 >
                   Forgot Password?
                 </button>

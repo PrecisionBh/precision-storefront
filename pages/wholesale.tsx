@@ -116,8 +116,14 @@ export default function WholesalePage() {
               Reach out to discuss dealer pricing, sponsorship opportunities, event partnerships, or becoming an official Precision retailer.
             </p>
 
-            <button className="mt-8 md:mt-14 w-full md:w-auto bg-[#D97732] hover:opacity-90 transition px-8 md:px-12 py-4 md:py-5 uppercase tracking-[2px] md:tracking-[4px] text-[11px] md:text-sm font-black rounded-xl">
-              Contact Us
+            <button
+              onClick={() => {
+                window.location.href =
+                  "/wholesale/apply"
+              }}
+              className="mt-8 md:mt-14 w-full md:w-auto bg-[#D97732] hover:opacity-90 transition px-8 md:px-12 py-4 md:py-5 uppercase tracking-[2px] md:tracking-[4px] text-[11px] md:text-sm font-black rounded-xl"
+            >
+              Apply Here
             </button>
 
           </div>
