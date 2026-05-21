@@ -51,13 +51,24 @@ export async function getServerSideProps() {
     query: getBlogsQuery,
   })
 
+  console.log(
+    JSON.stringify(res, null, 2)
+  )
+
   const blogs =
-    res?.body?.data?.blogs?.edges || []
+    res?.data?.blogs?.edges || []
 
   const articles =
-    blogs.flatMap(
-      (blog: any) =>
-        blog.node.articles.edges
+    blogs.flatMap((blog: any) =>
+
+      blog.node.articles.edges.map(
+        ({ node }: any) => ({
+          node,
+
+          blogHandle:
+            blog.node.handle,
+        })
+      )
     )
 
   return {
@@ -107,11 +118,14 @@ export default function BlogsPage({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             {articles.map(
-              ({ node }: any) => (
+              ({
+                node,
+                blogHandle,
+              }: any) => (
 
                 <Link
                   key={node.handle}
-                  href={`/blogs/${node.handle}`}
+                  href={`/blogs/${blogHandle}/${node.handle}`}
                   className="group border border-white/10 rounded-3xl overflow-hidden bg-[#111111] hover:border-[#D97732] transition"
                 >
 

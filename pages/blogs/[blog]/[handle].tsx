@@ -6,33 +6,27 @@ import LayoutContainer from "@/components/LayoutContainer"
 import { shopifyFetch } from "@/lib/shopify"
 
 const getArticleQuery = `
-query getArticle($handle: String!) {
+query getArticle($blogHandle: String!) {
 
-  blogs(first: 10) {
+  blog(handle: $blogHandle) {
 
-    edges {
+    title
+    handle
 
-      node {
+    articles(first: 50) {
 
-        title
-        handle
+      edges {
 
-        articles(first: 50) {
+        node {
 
-          edges {
+          title
+          handle
+          contentHtml
+          excerpt
+          publishedAt
 
-            node {
-
-              title
-              handle
-              contentHtml
-              excerpt
-              publishedAt
-
-              image {
-                url
-              }
-            }
+          image {
+            url
           }
         }
       }
@@ -49,28 +43,31 @@ export async function getServerSideProps({
     query: getArticleQuery,
 
     variables: {
-      handle: params.handle,
+      blogHandle:
+        params.blog,
     },
   })
 
-  const blogs =
-    res?.body?.data?.blogs?.edges || []
+  console.log(
+    JSON.stringify(res, null, 2)
+  )
+
+  const articles =
+    res?.data?.blog?.articles?.edges || []
 
   let article = null
 
-  blogs.forEach((blog: any) => {
+  articles.forEach(
+    ({ node }: any) => {
 
-    blog.node.articles.edges.forEach(
-      ({ node }: any) => {
-
-        if (
-          node.handle === params.handle
-        ) {
-          article = node
-        }
+      if (
+        node.handle ===
+        params.handle
+      ) {
+        article = node
       }
-    )
-  })
+    }
+  )
 
   if (!article) {
     return {
@@ -118,19 +115,19 @@ export default function BlogPostPage({
               ).toLocaleDateString()}
             </p>
 
-            {/* IMAGE */}
-            {article.image?.url && (
+{/* IMAGE */}
+{article.image?.url && (
 
-              <div className="mt-10 rounded-3xl overflow-hidden border border-white/10">
+  <div className="mt-10 rounded-3xl overflow-hidden border border-white/10 max-w-2xl mx-auto bg-[#111111]">
 
-                <img
-                  src={article.image.url}
-                  alt={article.title}
-                  className="w-full object-cover"
-                />
+    <img
+      src={article.image.url}
+      alt={article.title}
+      className="w-full h-[260px] md:h-[420px] object-contain"
+    />
 
-              </div>
-            )}
+  </div>
+)}
 
             {/* CONTENT */}
             <div
