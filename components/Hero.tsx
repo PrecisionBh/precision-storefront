@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function Hero() {
   return (
     <section className="min-h-[72vh] md:min-h-[82vh] bg-black text-white flex flex-col items-center justify-center relative overflow-hidden px-4 md:px-6">
@@ -29,13 +31,19 @@ export default function Hero() {
         {/* BUTTONS */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mt-7 md:mt-8">
 
-          <button className="w-full md:w-auto bg-[#D97732] border-b border-black/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:opacity-90 transition rounded-xl">
+          <Link
+            href="/shop"
+            className="w-full md:w-auto bg-[#D97732] border-b border-black/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:opacity-90 transition rounded-xl inline-flex items-center justify-center"
+          >
             Shop Now
-          </button>
+          </Link>
 
-          <button className="w-full md:w-auto border border-white/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:border-white transition rounded-xl">
+          <Link
+            href="/cues"
+            className="w-full md:w-auto border border-white/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:border-white transition rounded-xl inline-flex items-center justify-center"
+          >
             Browse Cues
-          </button>
+          </Link>
 
         </div>
 

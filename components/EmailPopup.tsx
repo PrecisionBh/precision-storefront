@@ -18,203 +18,197 @@ export default function EmailPopup() {
 
   useEffect(() => {
 
-    const alreadySeen =
+    // IF USER ALREADY SUBSCRIBED
+    const subscribed =
       localStorage.getItem(
-        "precision-popup-seen"
+        "precision-email-subscribed"
       )
 
-    if (alreadySeen) return
+    if (subscribed === "true") {
+      return
+    }
 
-    const timer =
-      setTimeout(() => {
+    // IF USER CLOSED POPUP
+    const dismissedUntil =
+      localStorage.getItem(
+        "precision-popup-dismissed"
+      )
 
-        setOpen(true)
+    if (dismissedUntil) {
 
-      }, 7000)
+      const now = Date.now()
 
-    return () =>
-      clearTimeout(timer)
+      if (now < Number(dismissedUntil)) {
+        return
+      }
+    }
+
+    // SHOW POPUP AFTER DELAY
+    const timer = setTimeout(() => {
+
+      setOpen(true)
+
+    }, 4000)
+
+    return () => clearTimeout(timer)
 
   }, [])
 
-  async function handleSubmit(
-    e: React.FormEvent
-  ) {
+  const handleClose = () => {
 
-    e.preventDefault()
+    setOpen(false)
 
-    console.log(
-      "SUBMIT CLICKED"
+    // HIDE FOR 7 DAYS
+    const sevenDays =
+      Date.now() +
+      7 * 24 * 60 * 60 * 1000
+
+    localStorage.setItem(
+      "precision-popup-dismissed",
+      sevenDays.toString()
     )
-
-    try {
-
-      setLoading(true)
-
-      const response =
-        await fetch(
-          "/api/subscribe",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-
-            body: JSON.stringify({
-              email,
-            }),
-          }
-        )
-
-      console.log(
-        "RESPONSE STATUS:",
-        response.status
-      )
-
-      const data =
-        await response.json()
-
-      console.log(
-        "API RESPONSE:",
-        data
-      )
-
-      if (!response.ok) {
-
-        throw new Error(
-          "Failed to subscribe"
-        )
-      }
-
-      setSuccess(true)
-
-      localStorage.setItem(
-        "precision-popup-seen",
-        "true"
-      )
-
-      setTimeout(() => {
-
-        setOpen(false)
-
-      }, 2000)
-
-    } catch (err) {
-
-      console.error(
-        "SUBSCRIBE ERROR:",
-        err
-      )
-
-    } finally {
-
-      setLoading(false)
-    }
   }
+
+  const handleSubmit =
+    async () => {
+
+      if (!email) return
+
+      try {
+
+        setLoading(true)
+
+        const response =
+          await fetch(
+            "/api/subscribe",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body: JSON.stringify({
+                email,
+              }),
+            }
+          )
+
+        if (!response.ok) {
+          throw new Error(
+            "Failed to subscribe"
+          )
+        }
+
+        // NEVER SHOW AGAIN
+        localStorage.setItem(
+          "precision-email-subscribed",
+          "true"
+        )
+
+        setSuccess(true)
+
+        setTimeout(() => {
+
+          setOpen(false)
+
+        }, 1800)
+
+      } catch (err) {
+
+        console.error(err)
+
+        alert(
+          "Something went wrong. Please try again."
+        )
+
+      } finally {
+
+        setLoading(false)
+
+      }
+    }
 
   if (!open) return null
 
   return (
-
     <div className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
 
-      <div className="bg-[#111111] border border-white/10 rounded-2xl max-w-md w-full p-8 relative shadow-2xl">
+      <div className="w-full max-w-[500px] bg-[#111111] border border-white/10 rounded-3xl p-6 md:p-8 relative shadow-2xl">
 
+        {/* CLOSE */}
         <button
-          onClick={() => setOpen(false)}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-white/50 hover:text-white transition text-xl"
         >
           ×
         </button>
 
-        {!success ? (
-          <>
+        {/* CONTENT */}
+        <div className="text-center">
 
-            <h2 className="text-white text-4xl font-black text-center mb-4">
-              Join Team Precision
-            </h2>
+          <p className="text-[#D97732] uppercase tracking-[5px] text-[10px] mb-4">
+            Precision Cues
+          </p>
 
-            <p className="text-gray-300 text-center leading-7 mb-8">
+          <h2 className="text-white text-[28px] md:text-[40px] font-black leading-[1]">
+            GET 5% OFF
+          </h2>
 
-              ✔ New cue drops
-              <br />
+          <p className="text-gray-400 mt-4 text-sm md:text-base leading-relaxed">
+            Join the Precision family and get
+            5% off your first order instantly.
+          </p>
 
-              ✔ Tournament announcements
-              <br />
-
-              ✔ Apparel releases
-              <br />
-
-              ✔ Exclusive deals
-              <br />
-
-              ✔ Giveaways
-
-            </p>
-
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4"
-            >
-
+          {!success ? (
+            <>
+              {/* INPUT */}
               <input
                 type="email"
-                required
-                placeholder="Email address"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) =>
                   setEmail(e.target.value)
                 }
-                className="w-full h-14 rounded-xl bg-black border border-white/10 px-4 text-white outline-none focus:border-[#D97732]"
+                className="w-full mt-6 h-[54px] bg-black border border-white/10 rounded-xl px-4 text-white placeholder:text-gray-500 outline-none focus:border-[#D97732] transition"
               />
 
+              {/* BUTTON */}
               <button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={loading}
-                className="w-full h-14 rounded-xl bg-[#D97732] hover:bg-[#c8641f] transition font-bold text-white text-lg disabled:opacity-50"
+                className="w-full mt-4 h-[54px] bg-[#D97732] hover:opacity-90 transition rounded-xl uppercase tracking-[2px] text-sm font-bold text-white disabled:opacity-50"
               >
                 {loading
-                  ? "Joining..."
-                  : "Join Team Precision"}
+                  ? "Loading..."
+                  : "Claim Discount"}
               </button>
+            </>
+          ) : (
+            <div className="mt-6">
 
-            </form>
+              <div className="w-16 h-16 rounded-full bg-[#D97732]/20 flex items-center justify-center mx-auto">
 
-            <p className="text-center text-sm text-gray-400 mt-5">
+                <span className="text-[#D97732] text-3xl">
+                  ✓
+                </span>
 
-              + Get 5% OFF your first order
+              </div>
 
-            </p>
+              <p className="text-white font-bold text-lg mt-4">
+                You're In!
+              </p>
 
-          </>
-        ) : (
+              <p className="text-gray-400 text-sm mt-2">
+                Check your email for your
+                discount code.
+              </p>
 
-          <div className="text-center py-8">
+            </div>
+          )}
 
-            <h2 className="text-white text-4xl font-black mb-4">
-              You're In 🎱
-            </h2>
-
-            <p className="text-gray-300 leading-7">
-
-              Welcome to Team Precision.
-              <br />
-              Keep an eye on your inbox for:
-              <br />
-              ✔ New drops
-              <br />
-              ✔ Exclusive deals
-              <br />
-              ✔ Giveaways
-              <br />
-              ✔ Tournament updates
-
-            </p>
-
-          </div>
-        )}
+        </div>
 
       </div>
 
