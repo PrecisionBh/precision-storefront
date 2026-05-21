@@ -1,5 +1,10 @@
 import { useState } from "react"
 
+import {
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa"
+
 import AnnouncementBar from "@/components/AnnouncementBar"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
@@ -12,6 +17,10 @@ export default function WholesaleLoginPage() {
 
   const [password, setPassword] =
     useState("")
+
+  const [showPassword,
+    setShowPassword] =
+    useState(false)
 
   const [loading, setLoading] =
     useState(false)
@@ -53,29 +62,29 @@ export default function WholesaleLoginPage() {
       }
 
       localStorage.setItem(
-  "customerAccessToken",
-  data.accessToken
-)
+        "customerAccessToken",
+        data.accessToken
+      )
 
-localStorage.setItem(
-  "wholesaleCustomer",
-  JSON.stringify({
-    email:
-      data.customer.email,
+      localStorage.setItem(
+        "wholesaleCustomer",
+        JSON.stringify({
+          email:
+            data.customer.email,
 
-    firstName:
-      data.customer.firstName,
+          firstName:
+            data.customer.firstName,
 
-    tags:
-      data.customer.tags,
+          tags:
+            data.customer.tags,
 
-    tier:
-      data.tier,
+          tier:
+            data.tier,
 
-    discount:
-      data.discount,
-  })
-)
+          discount:
+            data.discount,
+        })
+      )
 
       window.location.href =
         "/"
@@ -92,6 +101,68 @@ localStorage.setItem(
       setLoading(false)
     }
   }
+
+  const handleForgotPassword =
+    async () => {
+
+      if (!email) {
+
+        setError(
+          "Please enter your email first."
+        )
+
+        return
+      }
+
+      try {
+
+        setLoading(true)
+        setError("")
+
+        const response =
+          await fetch(
+            "/api/customer-recover",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body: JSON.stringify({
+                email,
+              }),
+            }
+          )
+
+        const data =
+          await response.json()
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            "Unable to send reset email."
+          )
+        }
+
+        alert(
+          "Password reset email sent."
+        )
+
+      } catch (err: any) {
+
+        setError(
+          err.message ||
+          "Something went wrong."
+        )
+
+      } finally {
+
+        setLoading(false)
+      }
+    }
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
@@ -178,17 +249,39 @@ localStorage.setItem(
                   className="w-full border border-black/10 rounded-2xl px-5 py-4 mb-4 outline-none focus:border-[#D97732]"
                 />
 
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) =>
-                    setPassword(
-                      e.target.value
-                    )
-                  }
-                  className="w-full border border-black/10 rounded-2xl px-5 py-4 outline-none focus:border-[#D97732]"
-                />
+                <div className="relative">
+
+                  <input
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) =>
+                      setPassword(
+                        e.target.value
+                      )
+                    }
+                    className="w-full border border-black/10 rounded-2xl px-5 py-4 pr-14 outline-none focus:border-[#D97732]"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setShowPassword(
+                        !showPassword
+                      )
+                    }
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                  >
+                    {showPassword
+                      ? <FaEyeSlash />
+                      : <FaEye />}
+                  </button>
+
+                </div>
 
                 {error && (
                   <p className="text-red-500 text-sm mt-4">
@@ -204,6 +297,16 @@ localStorage.setItem(
                   {loading
                     ? "Logging In..."
                     : "Login"}
+                </button>
+
+                <button
+                  onClick={
+                    handleForgotPassword
+                  }
+                  disabled={loading}
+                  className="mt-4 text-sm text-[#D97732] hover:underline text-center w-full"
+                >
+                  Forgot Password?
                 </button>
 
               </div>

@@ -81,6 +81,10 @@ export default function Footer() {
                 Contact
               </Link>
 
+              <Link href="/blogs" className="hover:text-[#D97732] transition">
+                Precision Insider
+              </Link>
+
             </div>
 
           </div>
