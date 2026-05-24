@@ -4,7 +4,7 @@ import type {
 } from "next"
 
 const formidable =
-  require("formidable")
+  require("formidable").default
 
 import fs from "fs"
 
@@ -25,7 +25,7 @@ const transporter =
         process.env.GMAIL_USER,
 
       pass:
-        process.env.GMAIL_PASS,
+        process.env.GMAIL_APP_PASSWORD,
     },
   })
 
@@ -119,42 +119,60 @@ export default async function handler(
                 <strong>
                   Business Name:
                 </strong>
-                ${fields.businessName || ""}
+                ${
+                  fields.businessName?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
                 <strong>
                   Contact Name:
                 </strong>
-                ${fields.contactName || ""}
+                ${
+                  fields.contactName?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
                 <strong>
                   Email:
                 </strong>
-                ${fields.email || ""}
+                ${
+                  fields.email?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
                 <strong>
                   Phone:
                 </strong>
-                ${fields.phone || ""}
+                ${
+                  fields.phone?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
                 <strong>
                   Website/Social:
                 </strong>
-                ${fields.website || ""}
+                ${
+                  fields.website?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
                 <strong>
                   Years In Business:
                 </strong>
-                ${fields.yearsInBusiness || ""}
+                ${
+                  fields.yearsInBusiness?.[0] ||
+                  ""
+                }
               </p>
 
               <p>
@@ -164,7 +182,10 @@ export default async function handler(
               </p>
 
               <p>
-                ${fields.message || ""}
+                ${
+                  fields.message?.[0] ||
+                  ""
+                }
               </p>
 
             </div>

@@ -318,6 +318,21 @@ export default function WholesaleLoginPage() {
                   Forgot Password?
                 </button>
 
+                <div className="mt-8 pt-8 border-t border-black/10 text-center">
+
+  <p className="text-gray-500 text-sm mb-5">
+    Not a dealer yet?
+  </p>
+
+  <a
+    href="/wholesale/apply"
+    className="inline-flex items-center justify-center bg-[#D97732] hover:opacity-90 transition px-8 py-4 rounded-2xl uppercase tracking-[3px] text-[11px] font-black text-white shadow-lg"
+  >
+    Apply To Be A Wholesaler
+  </a>
+
+</div>
+
               </div>
 
             </div>
