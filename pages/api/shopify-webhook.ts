@@ -88,6 +88,41 @@ console.log(
   isValid
 )
 
+console.log(
+  "RAW SECRET:",
+  process.env.SHOPIFY_WEBHOOK_SECRET
+)
+
+console.log(
+  "RAW BODY:",
+  rawBody.toString()
+)
+
+console.log(
+  "SHOPIFY HEADER:",
+  hmacHeader
+)
+
+console.log(
+  "GENERATED HASH:",
+  generatedHash
+)
+
+console.log(
+  "HASH MATCH:",
+  generatedHash === hmacHeader
+)
+
+console.log(
+  "GENERATED LENGTH:",
+  generatedHash.length
+)
+
+console.log(
+  "HEADER LENGTH:",
+  hmacHeader.length
+)
+
 if (!isValid) {
 
   console.error(
