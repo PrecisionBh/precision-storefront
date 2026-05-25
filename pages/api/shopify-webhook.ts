@@ -207,9 +207,6 @@ export default async function handler(
 
           registration_paid:
             true,
-
-          registration_amount:
-            15,
         })
 
     if (error) {
