@@ -51,23 +51,54 @@ export default async function handler(
 
     console.log("HMAC HEADER EXISTS:", !!hmacHeader)
 
-    const generatedHash = crypto
-      .createHmac(
-        "sha256",
-        process.env.SHOPIFY_WEBHOOK_SECRET!
-      )
-      .update(rawBody)
-      .digest("base64")
+    const generatedHash =
+  crypto
+    .createHmac(
+      "sha256",
+      process.env
+        .SHOPIFY_WEBHOOK_SECRET!
+    )
+    .update(rawBody)
+    .digest("base64")
 
-    console.log("GENERATED HASH:", generatedHash)
-    console.log("SHOPIFY HASH:", hmacHeader)
+const hashBuffer =
+  Buffer.from(generatedHash)
 
-    if (generatedHash !== hmacHeader) {
-      console.error("FAILED: Invalid webhook signature")
-      return res.status(401).json({
-        error: "Invalid webhook signature",
-      })
-    }
+const hmacBuffer =
+  Buffer.from(hmacHeader)
+
+const isValid =
+  crypto.timingSafeEqual(
+    hashBuffer,
+    hmacBuffer
+  )
+
+console.log(
+  "GENERATED:",
+  generatedHash
+)
+
+console.log(
+  "SHOPIFY:",
+  hmacHeader
+)
+
+console.log(
+  "VALID:",
+  isValid
+)
+
+if (!isValid) {
+
+  console.error(
+    "FAILED: Invalid webhook signature"
+  )
+
+  return res.status(401).json({
+    error:
+      "Invalid webhook signature",
+  })
+}
 
     console.log("PASSED: Signature verified")
 
