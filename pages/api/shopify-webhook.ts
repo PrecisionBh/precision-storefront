@@ -167,27 +167,6 @@ export default async function handler(
         )
       )
 
-    // COUNT CURRENT REGISTERED TEAMS
-    const {
-      count
-    } = await supabase
-      .from(
-        "tournament_teams"
-      )
-      .select("*", {
-        count: "exact",
-        head: true,
-      })
-      .neq(
-        "status",
-        "waitlist"
-      )
-
-    const status =
-      (count || 0) >= 64
-        ? "waitlist"
-        : "registered"
-
     const { error } =
       await supabase
         .from(
@@ -203,7 +182,8 @@ export default async function handler(
 
           robustness,
 
-          status,
+          status:
+            "registered",
 
           registration_paid:
             true,

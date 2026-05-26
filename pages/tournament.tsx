@@ -52,8 +52,10 @@ export default function TournamentPage() {
             </h1>
 
             <p className="mt-6 text-white/60 text-sm md:text-lg max-w-[850px] mx-auto leading-relaxed">
-              1217 & Under • 64 Team Cap • $115 Entry •
-              8 Ball • Race to 5 • Online Auction •
+              1217 & Under • 96 Team Cap • $115 Entry •
+              8 Ball • Race to 5 Winners Side •
+              Race to 4 Losers Side •
+              Online Auction •
               July 25th & 26th
             </p>
 
@@ -104,7 +106,7 @@ export default function TournamentPage() {
       {/* REGISTRATION FORM */}
       <TournamentRegistrationForm />
 
-      {/* RULES DROPDOWN */}
+      {/* RULES */}
       <TournamentRules />
 
       <Footer />

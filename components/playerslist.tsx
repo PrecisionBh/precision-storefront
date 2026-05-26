@@ -7,7 +7,7 @@ import { supabase } from "../lib/supabase"
 
 type Team = {
   id: number
-  status: "registered" | "checked_in" | "waitlist"
+  status: "registered" | "checked_in"
   registration_paid: boolean
 }
 
@@ -62,16 +62,11 @@ export default function TournamentTeams() {
   }
 
   const registeredTeams =
-  teams.filter(
-    (team) =>
-      team.status !== "waitlist"
-  )
-
-const waitlistTeams =
-  teams.filter(
-    (team) =>
-      team.status === "waitlist"
-  )
+    teams.filter(
+      (team) =>
+        team.status === "registered" ||
+        team.status === "checked_in"
+    )
 
   return (
     <section className="py-14 md:py-20">
@@ -96,7 +91,7 @@ const waitlistTeams =
         </div>
 
         {/* COUNTER */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
 
           <div className="bg-[#111111] border border-white/10 rounded-[22px] p-6 text-center">
 
@@ -117,22 +112,6 @@ const waitlistTeams =
           <div className="bg-[#111111] border border-white/10 rounded-[22px] p-6 text-center">
 
             <p className="text-white/50 uppercase tracking-[3px] text-[11px] mb-3">
-              Waitlist Teams
-            </p>
-
-            <h3 className="text-blue-400 text-5xl font-black">
-
-              {loading
-                ? "..."
-                : waitlistTeams.length}
-
-            </h3>
-
-          </div>
-
-          <div className="bg-[#111111] border border-white/10 rounded-[22px] p-6 text-center">
-
-            <p className="text-white/50 uppercase tracking-[3px] text-[11px] mb-3">
               Spots Remaining
             </p>
 
@@ -140,7 +119,7 @@ const waitlistTeams =
 
               {loading
                 ? "..."
-                : 64 - registeredTeams.length}
+                : 96 - registeredTeams.length}
 
             </h3>
 

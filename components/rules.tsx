@@ -10,7 +10,7 @@ const rules = [
   {
     title: "Tournament Format",
     content: [
-      "1217 robustness cap. 250 minimum robustness is required no exceptions. No other league substitutions for this tournament",
+      "1217 robustness cap. 250 minimum robustness or other league ratings (must be cleared with TD before sign-up. All TD decisions are final)",
       "1 game is given every 50 Fargo points.",
       "Maximum of 3 games spot.",
       "Higher robustness team always races up.",
@@ -26,7 +26,7 @@ const rules = [
       "Scratch on the 8-ball is NOT a loss.",
       "8-ball made in the wrong pocket IS a loss.",
       "Either player on the team may break.",
-      "Talking between teammates is allowed.",
+      "Talking between teammates is allowed. Please be cautious of slow play",
       "Jump cues are allowed.",
     ],
   },
