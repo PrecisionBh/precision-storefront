@@ -26,8 +26,8 @@ export default function PaymentInfo() {
               </h2>
 
               <p className="mt-4 text-white/60 text-sm md:text-base max-w-[750px] mx-auto leading-relaxed">
-                Full tournament payment must be completed before the registration timer ends.
-                Teams with unpaid balances may be removed from the field.
+                Tournament entries may be paid using the payment methods below or with cash at check-in.
+                Any auctioned team that does not show up for the event will be fully refunded to the winning bidder.
               </p>
 
             </div>
@@ -75,7 +75,7 @@ export default function PaymentInfo() {
             <div className="mt-8 text-center">
 
               <p className="text-white/50 text-sm md:text-base leading-relaxed max-w-[900px] mx-auto">
-                Players may pay auction balances in cash at tournament check-in. All side pots must be paid in cash at check-in on site.
+                Players may pay auction and remaining balances in cash at tournament check-in. All side pots must be paid in cash at check-in on site.
     
               </p>
 
