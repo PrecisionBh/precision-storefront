@@ -220,7 +220,7 @@ export default function RegisteredPlayersPage() {
 
                 <tbody>
 
-                  {registeredTeams.map((team) => {
+                  {registeredTeams.map((team, index) => {
 
                     const status =
                       getStatus(team.status)
@@ -232,7 +232,7 @@ export default function RegisteredPlayersPage() {
                       >
 
                         <td className="px-6 py-5 text-white font-black text-lg">
-                          #{team.id}
+                          #{index + 1}
                         </td>
 
                         <td className="px-6 py-5">
