@@ -169,7 +169,7 @@ export default function RegisteredPlayersPage() {
 
                 {loading
                   ? "..."
-                  : 96 - registeredTeams.length}
+                  : 64 - registeredTeams.length}
 
               </h3>
 
