@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import AnnouncementBar from "@/components/AnnouncementBar"
 import Navbar from "@/components/Navbar"
@@ -36,7 +36,7 @@ export default function JerseyProduct({
     useState(1)
 
   const [selectedCut, setSelectedCut] =
-    useState("FEMALE")
+  useState("Female")
 
   const [selectedSize, setSelectedSize] =
     useState("M")
@@ -46,6 +46,27 @@ export default function JerseyProduct({
 
   const [backName, setBackName] =
     useState("")
+
+    useEffect(() => {
+
+  const matchedVariant =
+    variants.find(
+      ({ node }: any) =>
+        node.title ===
+        `${selectedSize} / ${selectedCut}`
+    )
+
+  if (matchedVariant) {
+    setSelectedVariant(
+      matchedVariant.node
+    )
+  }
+
+}, [
+  selectedSize,
+  selectedCut,
+  variants
+])
 
   return (
     <main className="bg-[#111111] text-white min-h-screen">
@@ -208,7 +229,7 @@ export default function JerseyProduct({
 
                 <div className="flex flex-wrap gap-3">
 
-                  {["FEMALE", "MALE"].map(
+                  {["Female", "Male"].map(
                     (cut) => {
 
                       const active =
