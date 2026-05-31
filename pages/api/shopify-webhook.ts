@@ -168,26 +168,29 @@ export default async function handler(
       )
 
     const { error } =
-      await supabase
-        .from(
-          "tournament_teams"
-        )
-        .insert({
-          player1_name,
-          player1_fargo,
-          player1_phone,
+  await supabase
+    .from(
+      "tournament_teams"
+    )
+    .insert({
+      player1_name,
+      player1_fargo,
+      player1_phone,
 
-          player2_name,
-          player2_fargo,
+      player2_name,
+      player2_fargo,
 
-          robustness,
+      robustness,
 
-          status:
-            "registered",
+      tournament_id:
+        "6a3f7e4f-3dec-45b5-a139-bd77b0ad25c1",
 
-          registration_paid:
-            true,
-        })
+      status:
+        "registered",
+
+      registration_paid:
+        true,
+    })
 
     if (error) {
 
@@ -198,6 +201,51 @@ export default async function handler(
             "Database insert failed",
         })
     }
+
+    const { data: teams } =
+  await supabase
+    .from(
+      "tournament_teams"
+    )
+    .select(
+      "id, robustness"
+    )
+    .eq(
+      "tournament_id",
+      "6a3f7e4f-3dec-45b5-a139-bd77b0ad25c1"
+    )
+
+if (teams) {
+
+  const sorted =
+    [...teams].sort(
+      (a, b) =>
+        b.robustness -
+        a.robustness
+    )
+
+  for (
+    let i = 0;
+    i < sorted.length;
+    i++
+  ) {
+
+    await supabase
+      .from(
+        "tournament_teams"
+      )
+      .update({
+        display_order:
+          i + 1,
+      })
+      .eq(
+        "id",
+        sorted[i].id
+      )
+
+  }
+
+}
 
     return res
       .status(200)
