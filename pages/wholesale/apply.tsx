@@ -365,21 +365,42 @@ export default function WholesaleApplyPage() {
 
                         <label className="inline-flex items-center justify-center bg-[#D97732] hover:opacity-90 transition px-8 py-4 rounded-2xl uppercase tracking-[3px] text-[11px] font-black text-white cursor-pointer shadow-lg">
 
-                          Upload File
+  Upload File
 
-                          <input
-                            type="file"
-                            accept=".pdf,.png,.jpg,.jpeg"
-                            className="hidden"
-                            onChange={(e) =>
-                              setResaleCertificate(
-                                e.target.files?.[0] ||
-                                null
-                              )
-                            }
-                          />
+  <input
+    type="file"
+    accept=".pdf,.png,.jpg,.jpeg"
+    className="hidden"
+    onChange={(e) => {
 
-                        </label>
+      const file =
+        e.target.files?.[0]
+
+      if (!file) return
+
+      const maxSize =
+        5 * 1024 * 1024 // 5MB
+
+      if (
+        file.size > maxSize
+      ) {
+
+        alert(
+          "Please upload a file smaller than 5MB."
+        )
+
+        e.target.value = ""
+
+        return
+      }
+
+      setResaleCertificate(
+        file
+      )
+    }}
+  />
+
+</label>
 
                       </div>
 
