@@ -33,7 +33,7 @@ export default function Hero() {
 
           <Link
             href="/cues"
-            className="w-full md:w-auto border border-white/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:border-white transition rounded-xl inline-flex items-center justify-center"
+            className="w-full md:w-auto bg-[#D97732] border-b border-black/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:opacity-90 transition rounded-xl inline-flex items-center justify-center"
           >
             Browse Cues
           </Link>
