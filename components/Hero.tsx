@@ -28,15 +28,8 @@ export default function Hero() {
           Confidence Starts Here
         </p>
 
-        {/* BUTTONS */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 mt-7 md:mt-8">
-
-          <Link
-            href="/shop"
-            className="w-full md:w-auto bg-[#D97732] border-b border-black/20 px-8 md:px-9 h-[50px] md:h-[54px] uppercase tracking-[2px] md:tracking-[3px] text-[11px] md:text-sm font-bold hover:opacity-90 transition rounded-xl inline-flex items-center justify-center"
-          >
-            Shop Now
-          </Link>
+        {/* BUTTON */}
+        <div className="flex items-center justify-center mt-7 md:mt-8">
 
           <Link
             href="/cues"
