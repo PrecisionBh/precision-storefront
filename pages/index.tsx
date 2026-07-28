@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import CategoryGrid from "@/components/CategoryGrid"
 import WholesaleBanner from "@/components/WholesaleBanner"
-import TournamentBanner from "@/components/TournamentBanner"
 import StatsStrip from "@/components/StatsStrip"
 import Footer from "@/components/Footer"
 import LayoutContainer from "@/components/LayoutContainer"
@@ -92,9 +91,6 @@ export default function Home({
       </div>
 
       <Hero />
-
-      {/* TOURNAMENT BANNER */}
-      <TournamentBanner />
 
       <LayoutContainer>
 
